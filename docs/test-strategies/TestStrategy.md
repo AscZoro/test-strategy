@@ -1,103 +1,83 @@
-# Comprehensive Test Strategy Document
+# Test Strategy Document
 
 ## Section 1: Scope
 
-### Business Requirements
-- Authenticated users can upload high-resolution images to their profile gallery.
-- Upload button is accessible only to logged-in users.
-- Uploaded images sync instantly to the user's public portfolio grid page.
+### In-Scope
+- Single high-resolution image upload by authenticated users.
+- Upload interface is only available to users with an active session.
+- Uploads are processed through a secure API Gateway.
+- Server-side only image optimization and compression.
+- Synchronous virus scanning and file validation before storage.
+- Images are stored in AWS S3 buckets.
+- Uploaded images instantly update the user's public portfolio grid.
+
+### Out-of-Scope
+- Client-side image optimization or pre-processing.
+- Support for non-image files or formats (WebP, GIF, SVG, TIFF, etc.).
+- Batch or multi-file uploads.
+- Storage using internal file servers or non-AWS S3 providers.
 
 ### Constraints
-- Maximum file size for upload is 10MB.
-- Supported file formats are PNG and JPEG only.
-- Upload processing, virus scanning, and rendering must complete within 2.5 seconds on a standard 4G mobile network.
-- Images are stored in AWS S3 buckets via a secure API gateway backend.
-- Image optimization/compression is performed server-side.
-
-### Objectives
-- Verify only authenticated users can access the upload feature.
-- Validate successful upload of PNG and JPEG images up to 10MB.
-- Ensure upload, virus scan, and rendering complete within 2.5 seconds on 4G.
-- Confirm images are stored in AWS S3 via secure API gateway.
-- Check that uploaded images appear instantly in the public portfolio grid.
-- Ensure image optimization/compression is not performed client-side.
-
-### Scope Definition
-**In Scope:**
-- User authentication and upload access control
-- Image upload functionality for PNG and JPEG formats
-- File size validation (up to 10MB)
-- Upload processing, virus scanning, and rendering performance
-- AWS S3 storage integration via secure API gateway
-- Server-side image optimization/compression
-- Instant synchronization to public portfolio grid
-
-**Out of Scope:**
-- Support for image formats other than PNG and JPEG
-- Client-side image optimization/compression
-- Uploads by unauthenticated users
-- Storage solutions other than AWS S3
-
----
+- Maximum individual file size is 10MB.
+- Only PNG and JPEG formats are supported.
+- Strict backend header byte validation to prevent spoofed extensions.
+- End-to-end upload, processing, and rendering must complete within 2.5 seconds on a standard 4G network.
+- Single-file uploads only; no batch or multi-file uploads.
+- No client-side image optimization or pre-processing.
+- No support for non-image files or formats other than PNG/JPEG.
+- Storage is limited to AWS S3; no other providers.
 
 ## Section 2: Test Approach
 
 ### Testing Levels
-- UI / Front-End Component Level (Upload button visibility, file picker, and portfolio grid rendering)
-- API / Backend Integration Level (Upload endpoint, virus scan, image optimization, S3 storage, and sync triggers)
-- System End-to-End Level (Full workflow: authentication, upload, processing, and public grid sync)
+- UI / Front-End Component Level (Upload button visibility, authentication gating, grid update rendering)
+- API Gateway / Backend Integration Level (Upload endpoint, file validation, virus scanning, image optimization)
+- Cloud Storage Verification Level (AWS S3 bucket write/read validation)
+- End-to-End System Integration Level (Full upload-to-public-grid workflow, including SLA timing)
 
 ### Testing Types
-- Functional Testing (Authentication, upload access, file format and size validation, S3 integration, grid sync)
-- Boundary Value & Negative Testing (File size and format constraints, unauthorized access attempts)
-- Performance & SLA Latency Testing (Upload, virus scan, and rendering within 2.5 seconds on 4G network)
-- Security Testing (API gateway access, file upload security, virus scanning effectiveness)
+- Functional Testing (Authentication gating, file upload, grid update)
+- Boundary Value & Negative Testing (File size limits, unsupported formats, session expiry)
+- Security Testing (Virus scanning, header byte validation, session enforcement)
+- Performance & SLA Latency Testing (End-to-end upload and rendering within 2.5 seconds on 4G)
+- Data Integrity Testing (Image persistence and grid synchronicity)
 
 ### Test Design Techniques
-- Boundary Value Analysis (File size at 10MB, just below, and just above; image dimension extremes)
-- Equivalence Partitioning (Valid: PNG/JPEG; Invalid: other formats, corrupted files, oversized files)
-- State Transition Testing (User authentication states: logged-in vs. logged-out upload attempts)
-- Decision Table Testing (Combinations of file type, size, and authentication status)
-- Performance Profiling (Simulated 4G network conditions for end-to-end upload and rendering SLA)
+- Boundary Value Analysis (File size acceptance at 10.00MB, rejection at 10.01MB and above)
+- Equivalence Partitioning (Supported vs. unsupported file types: PNG/JPEG vs. others)
+- State Transition Testing (Session state changes: authenticated, expired, unauthenticated)
+- Negative Testing (Spoofed file extensions, invalid payloads, multi-file attempts)
+- Timing Analysis (Measuring total workflow duration under network constraints)
+- Security Payload Injection (Malicious file content, virus signature simulation)
 
 ### Environments Needed
-- Staging environment with production-like AWS S3 buckets (isolated for test data)
-- Secure API gateway endpoint with logging enabled for upload and storage operations
-- Front-end test harness with user authentication simulation (valid and invalid sessions)
-- Network virtualization tools (e.g., WANem, Charles Proxy) to throttle bandwidth to standard 4G speeds
-- Test data matrix: PNG and JPEG files at various sizes (1MB, 9.9MB, 10MB, 10.1MB), corrupted files, unsupported formats
-- Mock virus scanning service (for negative and positive scan result simulation)
-- Audit logs and portfolio grid UI snapshot capture for instant sync verification
+- Staging environment with user authentication and session management enabled
+- API Gateway endpoint with logging and request tracing
+- Mocked and real AWS S3 buckets for storage validation
+- Backend microservices for virus scanning and file validation (with toggles for simulating scan outcomes)
+- Network shaping tools to simulate standard 4G mobile bandwidth and latency
+- Test data sheets: Valid PNG/JPEG files at 9.99MB, 10.00MB, 10.01MB; invalid file types (e.g., GIF, SVG); files with spoofed extensions; files with embedded test viruses
+- Automated UI test harness for real-time grid update verification (with DOM mutation observers)
 
 ### Automation Frameworks & Tools
-- **Playwright**: UI automation for upload button visibility, file picker, and portfolio grid rendering.
-- **PyTest**: API and backend integration testing (upload endpoint, virus scan, S3 storage, sync triggers).
-- **JMeter**: Performance and SLA latency simulation under 4G network constraints.
-- **Charles Proxy/WANem**: Network virtualization for bandwidth throttling.
-- **Allure**: Test reporting and dashboarding.
-
----
+- **Playwright**: For UI automation (upload button visibility, grid update, DOM mutation observation)
+- **PyTest**: For backend API, file validation, and security payload injection
+- **Locust**: For simulating concurrent uploads and SLA timing under network constraints
+- **Moto (AWS Mocking)**: For S3 bucket integration testing
+- **Charles Proxy / Network Link Conditioner**: For 4G network simulation
 
 ## Section 3: Risk Management Matrix
 
 | Risk Area | Description | Severity | Mitigation Action |
 |-----------|-------------|----------|-------------------|
-| 1. Network Latency/Instability | Upload, scan, or rendering may exceed 2.5s SLA on 4G due to network drops or throttling. | High | Use JMeter and WANem to simulate adverse network conditions; set up alerting for SLA breaches; run soak tests during off-peak hours. |
-| 2. AWS S3/API Gateway Integration Failures | Uploads may fail or images may not sync due to S3 or API gateway outages. | High | Mock S3 and API gateway endpoints in staging; implement retry logic and error logging; monitor AWS health dashboards. |
-| 3. File Format/Size Validation Bypass | Malicious or malformed files may bypass client-side validation. | Medium | Enforce strict server-side validation; negative test cases for oversized/unsupported/corrupted files using PyTest. |
-| 4. Virus Scan Performance Bottleneck | Virus scanning may introduce latency, breaching SLA or blocking uploads. | Medium | Use mock virus scan service for test; profile scan times; optimize scan engine configuration; monitor scan logs for anomalies. |
-| 5. Instant Sync Race Conditions | Images may not appear instantly in the portfolio grid due to backend sync delays. | Medium | Add UI polling and backend event log checks in Playwright tests; instrument sync triggers with timestamps for latency analysis. |
-
----
+| 1. Network Latency Breaches | Upload-to-render time may exceed 2.5s SLA under real 4G conditions | High | Use network shaping tools in CI; run Locust-based load/SLA tests; alert on SLA breach |
+| 2. Spoofed File Extensions | Malicious files may bypass extension checks | High | Enforce backend magic number validation; negative tests with spoofed files via PyTest |
+| 3. Virus Scanning Microservice Failure | Inline virus scan may fail open, allowing unsafe files | Critical | Simulate scan failures; require hard fail on scan error; monitor logs for scan bypass |
+| 4. S3 Write Latency or Outage | Delayed or failed image persistence impacts grid sync | Medium | Use Moto for S3 outage simulation; alert on write failures; retry logic in backend |
+| 5. Session Expiry Race Conditions | Uploads may be accepted after session expiry | Medium | State transition tests; enforce session validation at API gateway; automate expiry scenarios |
 
 ### Resource & Timeline Estimate
-- **Test Automation Engineer (1 FTE):** 7 days for Playwright UI and PyTest API test development.
-- **Performance Engineer (0.5 FTE):** 3 days for JMeter scripting and network simulation setup.
-- **Manual QA (0.5 FTE):** 2 days for exploratory and negative path validation.
-- **Total Estimated Duration:** 10 calendar days (including review and stabilization).
-
----
-
-**Document Owner:** Senior QA Director & Release Risk Manager
-**Issue Reference:** AD-101
-**Last Updated:** 2024-06-30
+- **Test Automation Engineer**: 1 FTE, 2 weeks (framework setup, Playwright/PyTest scripting, CI integration)
+- **Manual QA Analyst**: 0.5 FTE, 1 week (exploratory, negative, and edge case validation)
+- **DevOps/Infra Support**: 0.2 FTE, 1 week (network shaping, S3/microservice toggling, CI pipeline config)
+- **Total Duration**: 2.5 weeks (including parallelization and review buffer)

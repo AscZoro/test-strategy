@@ -1,40 +1,57 @@
-# 1. Project Information
-- **Project Release:** Release V1.0
-- **Date:** 2024-07-14
+# 1. Project Overview
+
+**Project Release:** Release V1.0
+
+**Date:** 2026-07-14
+
+**Author:** Senior QA Director & Release Risk Manager
+
+---
 
 # 2. Change Control
-| Issue Date    | Version | Details | Author |
-|---------------|---------|---------|--------|
-| 2024-07-14    | V1.0    | Initial Test Strategy for Image Upload Feature | QA Director |
+
+| Issue Date | Version | Details | Author |
+|---|---|---|---|
+|2026-07-14|V1.0|Initial Test Strategy for Image Upload Feature|Senior QA Director|
+
+---
 
 # 3. Scope
-## 3.2.1 In Scope
+
+## 3.2 Test Scope
+
+### 3.2.1 In Scope
 - Single-file image upload via authenticated session
 - API Gateway upload endpoint
 - Server-side image optimization and compression
 - Inline virus scanning and file validation
-- PNG and JPEG file support
 - AWS S3 storage integration
-- Instant grid update on successful upload
+- Real-time portfolio grid update
 
-## 3.2.2 Out of Scope
+### 3.2.2 Out of Scope
 - Client-side image optimization or pre-processing
 - Support for non-image or alternative formats (WebP, GIF, SVG, TIFF)
-- Batch or multi-file uploads
-- Storage on internal file servers or non-AWS S3 providers
+- Multi-file or batch upload functionality
+- Storage solutions other than AWS S3
 
-# 4. Testing Approach
-## 4.1 Requirement Traceability Matrix
+---
+
+# 4. Test Approach
+
+## 4.1.1 Test Types
+
+Ref # | Test Type | Dev | QA | UAT | Pre-Prod | Prod
+---|---|---|---|---|---|---
+1 | Automation Testing (Playwright, PyTest) | X | X |   |   |   
+2 | Functional / Integration Testing | X | X | X |   |   
+3 | Security Testing (OWASP ZAP) |   | X |   |   |   
+4 | Performance Testing (JMeter, tcconfig) |   | X |   |   |   
+5 | Regression Testing |   | X | X |   |   
+6 | Boundary Value & Negative Testing | X | X |   |   |   
+7 | End-to-End System Testing |   | X | X |   |   
+
+## 4.2 Requirement Traceability Matrix
 <Describe how requirements / user stories will be mapped and traced dynamically with test cases.>
-
-## 4.2 Test Types
-### 4.2.1 Test Environments versus Test Types
-| Ref # | Test Type                   | Dev | QA | UAT | Pre-Prod | Prod |
-|-------|-----------------------------|-----|-----|-----|----------|------|
-| 2     | Automation Testing          |  X  |  X  |     |          |      |
-| 8     | Functional / Integration Testing|  X  |  X  |     |          |      |
-| 13    | Performance Testing         |     |  X  |     |          |      |
-| 15    | Security Testing            |     |  X  |     |          |      |
 
 ## 4.3 Test Management
 <Define the operational test management procedures and execution lifecycle patterns.>
@@ -45,84 +62,90 @@
 ### 4.3.3 Recording Pass/Fail Results
 <Indicate the exact criteria for marking an automated or manual test case as pass or fail.>
 
-## 4.5 Test Data Management
-### 4.5.1 Data Requirements
-- PNG/JPEG files at 9.99MB, 10.00MB, 10.01MB
-- Files with spoofed headers for negative testing
-- Valid/invalid authentication tokens
-- Test images with and without viruses
+## 4.4 Test Data Management
+<Describe the test data creation, refresh, and masking procedures.>
 
-## 4.7 Defect Management
-### 4.7.1 Defect SLA for Resolution
-| Defect Severity | Timeframe for Analysis and Correction |
-|-----------------|--------------------------------------|
-| Critical        | 1 business day                       |
-| High            | 2 business days                      |
-| Medium          | 5 business days                      |
-| Low             | 10 business days                     |
+## 4.5 Data Availability
+Test Type | Data Source | Environment | Data Type | Data Volume | Comments
+---|---|---|---|---|---
+Functional, Security, Performance | Test PNG/JPEG files, spoofed files, oversized files | Staging | Image, binary, malicious | Up to 10MB per file | Includes negative and boundary cases
 
-## 4.8 Reporting
-### 4.8.1 Testing Metrics
-- Pass/fail ratios
-- Coverage percentages
-- Bug burn-down metrics
-- SLA breach counts
-- Security rejection rates
-
-### 4.8.2 Maintaining Test Results
-<Indicate where and how long historical test execution logs are stored and tracked.>
-
-## 4.9 Tools Table
-| Tool         | Purpose                                 |
-|--------------|-----------------------------------------|
-| Playwright   | UI automation and upload button validation |
-| PyTest       | API and backend validation, DB checks   |
-| JMeter       | Performance/SLA simulation              |
-| OWASP ZAP    | Security and header byte validation     |
-| tcconfig     | Network shaping for 4G simulation       |
-
-# 5. Quality Objectives
-- Verify upload button is only accessible to authenticated users
-- Test rejection of upload attempts from unauthenticated or expired sessions
-- Validate successful upload and processing of PNG/JPEG files up to 10MB
-- Ensure files >=10.01MB are rejected with a clear validation alert
-- Test backend detection and rejection of files with spoofed extensions
-- Measure that the entire upload-to-render process completes within 2.5 seconds on 4G
-- Confirm that uploaded images appear instantly on the public portfolio grid without manual refresh
-
-# 6. Test Design Techniques
-- Boundary Value Analysis (file size acceptance at 10.00MB, rejection at 10.01MB and above)
-- Equivalence Partitioning (authentication states, file types)
-- State Transition Testing (session state changes)
-- Negative Testing (spoofed extensions, unsupported formats, multi-file attempts)
-- Timing/Latency Simulation (network throttling to standard 4G for SLA validation)
-
-# 7. Environments Needed
+## 4.6 Test Environments
 - Staging environment with user authentication and session management enabled
 - API Gateway endpoint with logging and rejection hooks for invalid payloads
-- Mock virus scanning microservice
-- AWS S3 bucket instance with isolated test folder
-- Network shaping/proxy tools for 4G simulation
-- UI automation harness for real-time grid update verification
+- Mock virus scanning and file validation microservices
+- AWS S3 test bucket with access logging
+- Network shaping tools to simulate 4G bandwidth and latency
 
-# 8. Resource & Timeline Estimate
-- 1 QA Automation Engineer (2 weeks)
-- 1 Performance Engineer (1 week)
-- 1 Security Engineer (1 week)
-- 1 Manual QA (1 week for exploratory/negative testing)
-- Total estimated duration: 3 weeks (parallelized)
+## 4.7 Test Schedule / Milestones
+| Phase | Start Date | End Date | Owner |
+|---|---|---|---|
+|Test Planning & Data Prep|2026-07-14|2026-07-17|QA Lead|
+|Script Development & Review|2026-07-18|2026-07-21|Automation Engineer|
+|Test Execution (Functional, Security, Performance)|2026-07-22|2026-07-25|QA Team|
+|Defect Triage & Regression|2026-07-26|2026-07-28|QA Lead|
+|Final Reporting & Sign-off|2026-07-29|2026-07-30|QA Director|
+
+## 4.8 Resource & Timeline Estimate
+- 1 QA Lead (coordination, reporting)
+- 2 Automation Engineers (script development, execution)
+- 1 Security Tester (OWASP ZAP, negative testing)
+- 1 Performance Engineer (JMeter, tcconfig)
+- Estimated duration: 2.5 weeks (including planning, execution, and reporting)
+
+## 4.9 Tools Table
+| Tool / Framework | Purpose | Test Level |
+|---|---|---|
+|Playwright|UI automation, upload button gating, grid sync|UI, E2E|
+|PyTest|API, backend, and integration validation|API, Integration|
+|JMeter|Performance/SLA simulation|Performance|
+|OWASP ZAP|Security and vulnerability scanning|Security|
+|tcconfig|Network shaping for 4G simulation|Performance|
+
+---
+
+# 5. Test Results & Reporting
+<Explain where and how long historical test execution logs are stored and tracked.>
+
+---
+
+# 6. Test Schedule / Milestones
+| Phase | Start Date | End Date | Owner |
+|---|---|---|---|
+|Test Planning & Data Prep|2026-07-14|2026-07-17|QA Lead|
+|Script Development & Review|2026-07-18|2026-07-21|Automation Engineer|
+|Test Execution (Functional, Security, Performance)|2026-07-22|2026-07-25|QA Team|
+|Defect Triage & Regression|2026-07-26|2026-07-28|QA Lead|
+|Final Reporting & Sign-off|2026-07-29|2026-07-30|QA Director|
+
+---
+
+# 7. Quality Objectives
+- Verify upload button visibility for authenticated users only
+- Validate rejection of upload attempts by unauthenticated or expired sessions
+- Test acceptance of files up to 10MB and rejection of files >=10.01MB
+- Confirm only PNG and JPEG files are accepted and properly validated
+- Ensure malicious files with spoofed extensions are rejected
+- Measure total upload-to-render time does not exceed 2.5 seconds on 4G
+- Check that uploaded images appear instantly on the public portfolio grid without manual refresh
+
+---
+
+# 8. Optional Sections
+<Section Details>
+
+---
 
 # 9. Risk Mitigation Table
-| Risk ID | Description | Impact | Likelihood | Mitigation Action | Owner |
-|---------|-------------|--------|------------|-------------------|-------|
-| R1      | Dynamic database connection drops during upload | High   | Medium     | Implement retry logic and alerting for DB failures | DevOps |
-| R2      | SLA breach due to large file or network latency | High   | Medium     | Use JMeter and tcconfig to simulate and tune for 4G SLA | Perf Eng |
-| R3      | Spoofed file extensions bypassing validation    | Medium | Low        | Enforce backend header byte checks and OWASP ZAP scans | Backend |
-| R4      | Virus scanning microservice false negatives     | High   | Low        | Regularly update virus definitions, run negative tests | Security |
-| R5      | AWS S3 write failures or permission issues      | Medium | Low        | Pre-validate S3 bucket access, monitor error logs      | DevOps |
+| Risk ID | Description | Impact | Likelihood | Severity | Mitigation Action | Owner |
+|---|---|---|---|---|---|---|
+|R1|Dynamic database/API connection drops during upload|High|Medium|High|Implement retry logic and alerting for failed uploads|DevOps Lead|
+|R2|SLA breach: Upload-to-render exceeds 2.5s on 4G|High|Medium|High|Use JMeter and tcconfig to simulate and optimize for network latency|Performance Engineer|
+|R3|Malicious file bypasses header validation|High|Low|High|Integrate OWASP ZAP and enhance backend magic number checks|Security Tester|
+|R4|Session expiry not enforced, unauthorized upload attempt|Medium|Low|Medium|Automated negative tests for session state transitions|QA Lead|
+|R5|AWS S3 write failures or permission issues|Medium|Low|Medium|Pre-deployment S3 access validation and error logging|DevOps Lead|
 
-# 10. Assumptions
-- All test environments will be available and stable during execution
-- Test data can be seeded and reset as needed
-- Required tools (Playwright, PyTest, JMeter, OWASP ZAP, tcconfig) are licensed and accessible
-- Upstream authentication and S3 integration are functional
+---
+
+# 10. Approval & Sign-off
+<Section Details>

@@ -12,101 +12,101 @@ endobj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
 endobj
 5 0 obj
-<< /Length 1734 >>
+<< /Length 4935 >>
 stream
 BT
 /F1 8 Tf
 35 750 Td
 12 TL
-(User Guide  Text File to Excel Conversion Workflow) Tj
+(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: EOB Document Generation - Variant 23 	 Id:) Tj
 T*
-(Workflow documentation for text file to excel format normalizer) Tj
+(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Interest Penalty Calculation - Variant 11 ) Tj
 T*
-(1. Overview) Tj
+(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Provider NPI Verification - Variant 11 	 I) Tj
 T*
-(This document provides a comprehensive user guide for the Text File to Excel Conversion Workflow. Th) Tj
+(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Location Map View - Variant 4 	 Id) Tj
 T*
-(2. Workflow Details) Tj
+(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Alert Dismissal Persistence - ) Tj
 T*
-(Workflow Name: Text to Excel Conversion) Tj
+(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Cost Spike Detection - Variant) Tj
 T*
-(Workflow Purpose: Convert input text files into formatted Excel spreadsheets) Tj
+(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Maximum Out-of-Pocket Cap - Variant 22 	 I) Tj
 T*
-(Workflow Type: Automated Data Transformation Workflow) Tj
+(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Automated Summary Generation -) Tj
 T*
-(Supported File Formats: .txt \(customizable\)) Tj
+(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Provider NPI Verification - Variant 8 	 Id) Tj
 T*
-(Output Format: Microsoft Excel \(xlsx\) \(downloadable\)) Tj
+(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Predictive No-Show Score - Var) Tj
 T*
-(Execution Mode: Manual) Tj
+(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Telehealth Link Generation - Varia) Tj
 T*
-(Expected Output: Structured Excel workbook with mapped columns and formatted data) Tj
+(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Historical Baseline Comparison) Tj
 T*
-(	Workflow ID) Tj
+(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Reschedule Request - Variant 16 	 ) Tj
 T*
-(	Workflow Name) Tj
+(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Historical Baseline Comparison) Tj
 T*
-(	Workflow Actions) Tj
+(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Anomaly Detection Alert 	 Id: ) Tj
 T*
-(	Input) Tj
+(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Adjustment Code Processing - Variant 21 	 ) Tj
 T*
-(	Output) Tj
+(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Alert Dismissal Persistence - ) Tj
 T*
-( ) Tj
+(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Reschedule Request - Variant 12 	 ) Tj
 T*
-(	17104) Tj
+(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: False Positive Feedback Loop -) Tj
 T*
-( ) Tj
+(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Location Map View - Variant 21 	 I) Tj
 T*
-(	Text to Excel Conversion 2) Tj
+(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: EOB Document Generation - Variant 22 	 Id:) Tj
 T*
-(	Convert input text files into formatted Excel spreadsheets) Tj
+(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Claim Line Item Split - Variant 4 	 Id: TC) Tj
 T*
-(	Text File) Tj
+(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Location Map View - Variant 23 	 I) Tj
 T*
-(	.xlsx document) Tj
+(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Provider NPI Verification - Variant 23 	 I) Tj
 T*
-( ) Tj
+(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Bundled Service Deduction - Variant 22 	 I) Tj
 T*
-( ) Tj
+(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Print Summary - Variant 23 	 Id: T) Tj
 T*
-(3. Agent Details) Tj
+(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Explanation Tooltip Generation) Tj
 T*
-(Agent Name: Text To Excel Transformation Agent) Tj
+(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Predictive No-Show Score - Var) Tj
 T*
-(Agent Description: This agent restructures unstructured or semi-structured text into clean Excel spr) Tj
+(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Maximum Out-of-Pocket Cap - Variant 8 	 Id) Tj
 T*
-(Execution Permissions: Read/Write access to source and destination folders in GitHub.) Tj
+(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Mobile Responsive Grid - Variant 1) Tj
 T*
-(Monitoring Capability: Workflow execution logs and alert notifications) Tj
+(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Confidence Threshold Filter - ) Tj
 T*
-(	Agent Name) Tj
+(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Timezone Sync - Variant 6 	 Id: TC) Tj
 T*
-(	Mapped Workflow ID) Tj
+(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: High Value Claim Audit Trigger - Variant 3) Tj
 T*
-(	Actions) Tj
+(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Timely Filing Limit Edge - Variant 7 	 Id:) Tj
 T*
-(	Outputs) Tj
+(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Reschedule Request - Variant 8 	 I) Tj
 T*
-(	Tools Used) Tj
+(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Check-in Status Indicator - Varian) Tj
 T*
-(	Knowledge Base) Tj
+(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: EOB Document Generation - Variant 9 	 Id: ) Tj
 T*
-( ) Tj
+(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Timely Filing Limit Edge - Variant 20 	 Id) Tj
 T*
-(	Text To Excel Transformation Agent) Tj
+(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: No Appointments Empty State - Vari) Tj
 T*
-(	17104) Tj
+(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Historical Baseline Comparison) Tj
 T*
-(	· File extraction and conversion) Tj
+(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Timely Filing Limit Edge - Variant 9 	 Id:) Tj
 T*
-(	.xlsx document) Tj
+(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Unusual Billing Pattern Flag -) Tj
 T*
-(	Text-to-Excel Generator) Tj
+(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Procedure Code Cross-check - Variant 3 	 I) Tj
 T*
-(	NA) Tj
+(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Interest Penalty Calculation - Variant 22 ) Tj
 T*
-( ) Tj
+(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Bundled Service Deduction - Variant 10 	 I) Tj
 T*
 ET
 endstream

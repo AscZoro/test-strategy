@@ -12,12 +12,12 @@ endobj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
 endobj
 5 0 obj
-<< /Length 164 >>
+<< /Length 163 >>
 stream
 BT
-/F1 11 Tf
-50 750 Td
-16 TL
+/F1 9 Tf
+40 750 Td
+14 TL
 (Module,User Story ID,Title,Priority) Tj
 T*
 (Authentication,US-001,Login Page,High) Tj

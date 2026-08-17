@@ -12,101 +12,17 @@ endobj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
 endobj
 5 0 obj
-<< /Length 4935 >>
+<< /Length 163 >>
 stream
 BT
 /F1 8 Tf
 35 750 Td
 12 TL
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: EOB Document Generation - Variant 23 	 Id:) Tj
+(Module,User Story ID,Title,Priority) Tj
 T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Interest Penalty Calculation - Variant 11 ) Tj
+(Authentication,US-001,Login Page,High) Tj
 T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Provider NPI Verification - Variant 11 	 I) Tj
-T*
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Location Map View - Variant 4 	 Id) Tj
-T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Alert Dismissal Persistence - ) Tj
-T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Cost Spike Detection - Variant) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Maximum Out-of-Pocket Cap - Variant 22 	 I) Tj
-T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Automated Summary Generation -) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Provider NPI Verification - Variant 8 	 Id) Tj
-T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Predictive No-Show Score - Var) Tj
-T*
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Telehealth Link Generation - Varia) Tj
-T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Historical Baseline Comparison) Tj
-T*
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Reschedule Request - Variant 16 	 ) Tj
-T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Historical Baseline Comparison) Tj
-T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Anomaly Detection Alert 	 Id: ) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Adjustment Code Processing - Variant 21 	 ) Tj
-T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Alert Dismissal Persistence - ) Tj
-T*
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Reschedule Request - Variant 12 	 ) Tj
-T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: False Positive Feedback Loop -) Tj
-T*
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Location Map View - Variant 21 	 I) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: EOB Document Generation - Variant 22 	 Id:) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Claim Line Item Split - Variant 4 	 Id: TC) Tj
-T*
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Location Map View - Variant 23 	 I) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Provider NPI Verification - Variant 23 	 I) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Bundled Service Deduction - Variant 22 	 I) Tj
-T*
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Print Summary - Variant 23 	 Id: T) Tj
-T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Explanation Tooltip Generation) Tj
-T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Predictive No-Show Score - Var) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Maximum Out-of-Pocket Cap - Variant 8 	 Id) Tj
-T*
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Mobile Responsive Grid - Variant 1) Tj
-T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Confidence Threshold Filter - ) Tj
-T*
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Timezone Sync - Variant 6 	 Id: TC) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: High Value Claim Audit Trigger - Variant 3) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Timely Filing Limit Edge - Variant 7 	 Id:) Tj
-T*
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Reschedule Request - Variant 8 	 I) Tj
-T*
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Check-in Status Indicator - Varian) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: EOB Document Generation - Variant 9 	 Id: ) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Timely Filing Limit Edge - Variant 20 	 Id) Tj
-T*
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: No Appointments Empty State - Vari) Tj
-T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Historical Baseline Comparison) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Timely Filing Limit Edge - Variant 9 	 Id:) Tj
-T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Unusual Billing Pattern Flag -) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Procedure Code Cross-check - Variant 3 	 I) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Interest Penalty Calculation - Variant 22 ) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Bundled Service Deduction - Variant 10 	 I) Tj
+(Dashboard,US-002,User Stats,Medium) Tj
 T*
 ET
 endstream

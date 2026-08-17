@@ -116,6 +116,11 @@ Output file :
 
 
 
+image1.emf
+testcases  delimited.txt
+
+
+testcases delimited.txt
 Scenario ID|Scenario Title|Test Case ID|Test Case Title|Preconditions|Test Type|Automation Feasible|Test Data|Step #|Test Step Description|Expected Result
 TC001|US32275|Plan Recommendation|Verify side-by-side plan comparison|User is logged into the CareSource enrollment portal and has completed the health needs questionnaire|Functional|Yes|User with completed profile and at least two recommended plans|1|Navigate to plan recommendation page|System displays side-by-side comparison of at least two plans highlighting premiums, deductibles, co-pays, out-of-pocket maximums, and coverage for specified medications and doctors
 ||||||||2|Review plan features and select a plan|Selected plan is highlighted and user can proceed to enrollment

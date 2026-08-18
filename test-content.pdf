@@ -12,101 +12,13 @@ endobj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
 endobj
 5 0 obj
-<< /Length 1734 >>
+<< /Length 139 >>
 stream
 BT
 /F1 8 Tf
 35 750 Td
 12 TL
-(User Guide  Text File to Excel Conversion Workflow) Tj
-T*
-(Workflow documentation for text file to excel format normalizer) Tj
-T*
-(1. Overview) Tj
-T*
-(This document provides a comprehensive user guide for the Text File to Excel Conversion Workflow. Th) Tj
-T*
-(2. Workflow Details) Tj
-T*
-(Workflow Name: Text to Excel Conversion) Tj
-T*
-(Workflow Purpose: Convert input text files into formatted Excel spreadsheets) Tj
-T*
-(Workflow Type: Automated Data Transformation Workflow) Tj
-T*
-(Supported File Formats: .txt \(customizable\)) Tj
-T*
-(Output Format: Microsoft Excel \(xlsx\) \(downloadable\)) Tj
-T*
-(Execution Mode: Manual) Tj
-T*
-(Expected Output: Structured Excel workbook with mapped columns and formatted data) Tj
-T*
-(	Workflow ID) Tj
-T*
-(	Workflow Name) Tj
-T*
-(	Workflow Actions) Tj
-T*
-(	Input) Tj
-T*
-(	Output) Tj
-T*
-( ) Tj
-T*
-(	17104) Tj
-T*
-( ) Tj
-T*
-(	Text to Excel Conversion 2) Tj
-T*
-(	Convert input text files into formatted Excel spreadsheets) Tj
-T*
-(	Text File) Tj
-T*
-(	.xlsx document) Tj
-T*
-( ) Tj
-T*
-( ) Tj
-T*
-(3. Agent Details) Tj
-T*
-(Agent Name: Text To Excel Transformation Agent) Tj
-T*
-(Agent Description: This agent restructures unstructured or semi-structured text into clean Excel spr) Tj
-T*
-(Execution Permissions: Read/Write access to source and destination folders in GitHub.) Tj
-T*
-(Monitoring Capability: Workflow execution logs and alert notifications) Tj
-T*
-(	Agent Name) Tj
-T*
-(	Mapped Workflow ID) Tj
-T*
-(	Actions) Tj
-T*
-(	Outputs) Tj
-T*
-(	Tools Used) Tj
-T*
-(	Knowledge Base) Tj
-T*
-( ) Tj
-T*
-(	Text To Excel Transformation Agent) Tj
-T*
-(	17104) Tj
-T*
-(	· File extraction and conversion) Tj
-T*
-(	.xlsx document) Tj
-T*
-(	Text-to-Excel Generator) Tj
-T*
-(	NA) Tj
-T*
-( ) Tj
+(Module,User Story ID,Title,Priority\\nAuthentication,US-001,Login Page,High\\nDashboard,US-002,User ) Tj
 T*
 ET
 endstream

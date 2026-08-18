@@ -12,57 +12,101 @@ endobj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
 endobj
 5 0 obj
-<< /Length 2537 >>
+<< /Length 1734 >>
 stream
 BT
 /F1 8 Tf
 35 750 Td
 12 TL
-(Work Item ID: 1571 | Module: Patient Portal Appointments | Name: Local Time Zone Conversion | Id: TC) Tj
+(User Guide  Text File to Excel Conversion Workflow) Tj
 T*
-(Work Item ID: 1573 | Module: AI Insights & Anomaly Detection | Name: Data Pipeline Health Monitor - ) Tj
+(Workflow documentation for text file to excel format normalizer) Tj
 T*
-(Work Item ID: 1573 | Module: AI Insights & Anomaly Detection | Name: Confidence Threshold Filter - V) Tj
+(1. Overview) Tj
 T*
-(Work Item ID: 1571 | Module: Patient Portal Appointments | Name: Pagination Control - Variant 12 | I) Tj
+(This document provides a comprehensive user guide for the Text File to Excel Conversion Workflow. Th) Tj
 T*
-(Work Item ID: 1572 | Module: Claims Adjudication | Name: Maximum Out-of-Pocket Cap - Variant 11 | Id) Tj
+(2. Workflow Details) Tj
 T*
-(Work Item ID: 1571 | Module: Patient Portal Appointments | Name: Pagination Control - Variant 7 | Id) Tj
+(Workflow Name: Text to Excel Conversion) Tj
 T*
-(Work Item ID: 1573 | Module: AI Insights & Anomaly Detection | Name: Recommendation Engine Ranking -) Tj
+(Workflow Purpose: Convert input text files into formatted Excel spreadsheets) Tj
 T*
-(Work Item ID: 1573 | Module: AI Insights & Anomaly Detection | Name: Custom Threshold Setting - Vari) Tj
+(Workflow Type: Automated Data Transformation Workflow) Tj
 T*
-(Work Item ID: 1571 | Module: Patient Portal Appointments | Name: Cancel Appointment Modal - Variant ) Tj
+(Supported File Formats: .txt \(customizable\)) Tj
 T*
-(Work Item ID: 1573 | Module: AI Insights & Anomaly Detection | Name: Predictive No-Show Score - Vari) Tj
+(Output Format: Microsoft Excel \(xlsx\) \(downloadable\)) Tj
 T*
-(Work Item ID: 1571 | Module: Patient Portal Appointments | Name: Appointment Reminder Toggle - Varia) Tj
+(Execution Mode: Manual) Tj
 T*
-(Work Item ID: 1572 | Module: Claims Adjudication | Name: Batch Claim Ingestion - Variant 10 | Id: TC) Tj
+(Expected Output: Structured Excel workbook with mapped columns and formatted data) Tj
 T*
-(Work Item ID: 1572 | Module: Claims Adjudication | Name: Claim Line Item Split - Variant 18 | Id: TC) Tj
+(	Workflow ID) Tj
 T*
-(Work Item ID: 1573 | Module: AI Insights & Anomaly Detection | Name: Feature Attribution UI - Varian) Tj
+(	Workflow Name) Tj
 T*
-(Work Item ID: 1571 | Module: Patient Portal Appointments | Name: Cancel Appointment Modal - Variant ) Tj
+(	Workflow Actions) Tj
 T*
-(Work Item ID: 1572 | Module: Claims Adjudication | Name: Deductible Met Flow | Id: TC021 | Descripti) Tj
+(	Input) Tj
 T*
-(Work Item ID: 1571 | Module: Patient Portal Appointments | Name: Specialty Filter - Variant 21 | Id:) Tj
+(	Output) Tj
 T*
-(Work Item ID: 1572 | Module: Claims Adjudication | Name: Timely Filing Limit Edge - Variant 8 | Id: ) Tj
+( ) Tj
 T*
-(Work Item ID: 1571 | Module: Patient Portal Appointments | Name: Chronological Sorting | Id: TC001 |) Tj
+(	17104) Tj
 T*
-(Work Item ID: 1573 | Module: AI Insights & Anomaly Detection | Name: Anomaly Detection Alert | Id: T) Tj
+( ) Tj
 T*
-(Work Item ID: 1572 | Module: Claims Adjudication | Name: Negative - Inactive Enrollment | Id: TC003 ) Tj
+(	Text to Excel Conversion 2) Tj
 T*
-(Work Item ID: 1571 | Module: Patient Portal Appointments | Name: Accessibility - WCAG AA | Id: TC004) Tj
+(	Convert input text files into formatted Excel spreadsheets) Tj
 T*
-(Work Item ID: 1573 | Module: AI Insights & Anomaly Detection | Name: Successful Insights Display | I) Tj
+(	Text File) Tj
+T*
+(	.xlsx document) Tj
+T*
+( ) Tj
+T*
+( ) Tj
+T*
+(3. Agent Details) Tj
+T*
+(Agent Name: Text To Excel Transformation Agent) Tj
+T*
+(Agent Description: This agent restructures unstructured or semi-structured text into clean Excel spr) Tj
+T*
+(Execution Permissions: Read/Write access to source and destination folders in GitHub.) Tj
+T*
+(Monitoring Capability: Workflow execution logs and alert notifications) Tj
+T*
+(	Agent Name) Tj
+T*
+(	Mapped Workflow ID) Tj
+T*
+(	Actions) Tj
+T*
+(	Outputs) Tj
+T*
+(	Tools Used) Tj
+T*
+(	Knowledge Base) Tj
+T*
+( ) Tj
+T*
+(	Text To Excel Transformation Agent) Tj
+T*
+(	17104) Tj
+T*
+(	· File extraction and conversion) Tj
+T*
+(	.xlsx document) Tj
+T*
+(	Text-to-Excel Generator) Tj
+T*
+(	NA) Tj
+T*
+( ) Tj
 T*
 ET
 endstream

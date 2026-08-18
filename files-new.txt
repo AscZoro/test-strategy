@@ -1,1 +1,150 @@
-User Story Document.txt
+User Guide – Text File to Excel Conversion Workflow
+Workflow documentation for text file to excel format normalizer
+1. Overview
+This document provides a comprehensive user guide for the Text File to Excel Conversion Workflow. The workflow is designed to automate the extraction, transformation, and conversion of structured or semi-structured text file data into Microsoft Excel format.
+2. Workflow Details
+Workflow Name: Text to Excel Conversion
+Workflow Purpose: Convert input text files into formatted Excel spreadsheets
+Workflow Type: Automated Data Transformation Workflow
+Supported File Formats: .txt (customizable)
+Output Format: Microsoft Excel (xlsx) (downloadable)
+Execution Mode: Manual
+Expected Output: Structured Excel workbook with mapped columns and formatted data
+	Workflow ID
+	Workflow Name
+	Workflow Actions
+	Input
+	Output
+
+	17104
+
+	Text to Excel Conversion 2
+	Convert input text files into formatted Excel spreadsheets
+	Text File
+	.xlsx document
+
+
+3. Agent Details
+Agent Name: Text To Excel Transformation Agent
+Agent Description: This agent restructures unstructured or semi-structured text into clean Excel spreadsheets and provides users with a direct download link. 
+Execution Permissions: Read/Write access to source and destination folders in GitHub.
+Monitoring Capability: Workflow execution logs and alert notifications
+	Agent Name
+	Mapped Workflow ID
+	Actions
+	Outputs
+	Tools Used
+	Knowledge Base
+
+	Text To Excel Transformation Agent
+	17104
+	· File extraction and conversion
+	.xlsx document
+	Text-to-Excel Generator
+	NA
+
+
+4. Tool Details
+Tool Name: Text-to-Excel Generator
+Primary Function: Converts raw text content into structured Excel spreadsheets dynamically.
+Core Processing Engine: Uses Pandas DataFrame Transformation and OpenPyXL Excel generation.
+Dynamic Header Detection: Automatically identifies delimiters such as pipe (|) and comma (,).
+JSON Parsing Capability: Supports valid and malformed JSON structure recovery using heuristic repair logic.
+Fallback Extraction Logic: Uses regex-based key-value extraction when standard JSON parsing fails.
+Multi-line Record Handling: Merges broken or wrapped text lines into the correct data rows.
+Schema Matrix Normalization: Dynamically aligns parent-child row structures into tabular format.
+GitHub Integration: Uploads generated Excel files directly into a specified GitHub repository using GitHub REST API.
+Authentication Method: Uses GitHub Personal Access Token (PAT) for secure repository access.
+Supported Output Format: Microsoft Excel (.xlsx).
+Error Handling: Detects empty content, invalid layouts, GitHub upload failures, and transformation exceptions.
+Libraries Used: Pandas, Requests, OpenPyXL, Pydantic, Base64, Regex (re), JSON.
+Logging Utility: Captures execution logs and error details
+5. Input Parameters
+The following parameters are required before executing the workflow:
+	Parameter
+	Description
+	Example
+
+	Input text file
+	Text file input file to be uploaded
+	data.txt uploaded as workflow input
+
+	GitHub token
+	Access token for GitHub
+	ghp_L3wDyRoieUYLZ49hPKt
+
+	GitHub Repo Owner
+	Owner name for the GitHub repo
+	NavneetBN47
+
+	GitHub Repo Name
+	Repository name
+	testX
+
+	Output file Name
+	Required name for the downloadable excel file
+	Testcases (no suffix required)
+
+
+
+
+6. Prerequisites
+AAVA int 2.0 access 
+Access to Quality Engineering realm.
+GitHub repository setup.
+User must have access permissions to input/output directories.
+Microsoft Excel or compatible spreadsheet software should be available for validation.
+7. Execution Steps
+Place the source text file in the configured input directory of the workflow.
+Provide required input parameters and execute.
+Monitor execution logs for successful completion.
+Verify generated Excel output by downloading from the URL provided in the workflow output.
+8. Error Handling & Troubleshooting
+Invalid file format – Ensure the source file is supported
+Permission denied – Verify folder access permissions.
+Empty output file – Validate source file contents.
+Workflow failure – Review execution logs for detailed error messages
+Common failure RCA – Ensure tool attachment in agent, verify repository access and token expiry.
+
+9. Example Execution Details
+Execution ID : 740e7f859-3ff9-464a-aded-8c25e077c353
+Execution logs : AAVA Launchpad – AI Agent Platform by Ascendion
+Input file : 
+
+
+Output file : 
+
+
+
+Scenario ID|Scenario Title|Test Case ID|Test Case Title|Preconditions|Test Type|Automation Feasible|Test Data|Step #|Test Step Description|Expected Result
+TC001|US32275|Plan Recommendation|Verify side-by-side plan comparison|User is logged into the CareSource enrollment portal and has completed the health needs questionnaire|Functional|Yes|User with completed profile and at least two recommended plans|1|Navigate to plan recommendation page|System displays side-by-side comparison of at least two plans highlighting premiums, deductibles, co-pays, out-of-pocket maximums, and coverage for specified medications and doctors
+||||||||2|Review plan features and select a plan|Selected plan is highlighted and user can proceed to enrollment
+TC002|US32275|Plan Recommendation|Verify navigation to enrollment after plan selection|User is on the plan comparison page|Functional|Yes|User with at least one recommended plan|1|Select a plan and click 'Enroll'|System transitions to the enrollment process with the chosen plan pre-selected
+TC003|US32275|Plan Recommendation|Negative - No recommended plans|User has completed health needs but no plans match criteria|Negative|Yes|User with uncommon criteria resulting in no matches|1|Navigate to plan recommendation page|System displays a message: "No plans match your criteria. Please adjust your preferences."
+TC004|US32275|Plan Recommendation|Edge - Maximum number of plans|User qualifies for 10+ plans|Edge|Yes|User with broad criteria resulting in maximum recommendations|1|Navigate to plan recommendation page|System displays all recommended plans in a scrollable, readable format without UI breakage
+TC005|US32274|Plan Personalization|Verify member can input medications and providers|User is authenticated|Functional|Yes|Medication: Metformin 500mg, Provider: Dr. Smith|1|Navigate to health needs input page|System displays input fields for medications and providers
+||||||||2|Enter medication and provider information and submit|System accepts input, validates data, and confirms successful entry
+TC006|US32274|Plan Personalization|Verify financial preference input|User is authenticated|Functional|Yes|Premium: $200, Deductible: $1000, OOP Max: $5000|1|Navigate to financial preferences section|System displays fields for premium, deductible, and out-of-pocket maximum
+||||||||2|Enter preferences and submit|System saves preferences and updates recommendation criteria
+TC007|US32274|Plan Personalization|Negative - Invalid medication entry|User is authenticated|Negative|Yes|Medication: "" (blank entry)|1|Leave medication field blank and submit|System displays error: "Medication name required"
+TC008|US32274|Plan Personalization|Edge - Large medication list|User is authenticated|Edge|Yes|Medication: 20+ entries|1|Enter 20+ medications and submit|System accepts all entries and processes recommendations without error
+TC009|US32273|Guided Enrollment|Verify guided workflow for plan selection|User is a prospective member|Functional|Yes|Health: Asthma, PCP: Dr. Lee, Premium: $150|1|Start guided enrollment|System prompts for health data, provider, and financial preferences in sequence
+||||||||2|Complete all steps and submit|System generates and displays personalized plan recommendations with comparison tool
+TC010|US32273|Guided Enrollment|Negative - Missing required fields|User is a prospective member|Negative|Yes|Omit required health data|1|Attempt to proceed without entering all required fields|System displays validation errors for missing fields
+TC011|US32273|Guided Enrollment|Edge - Extreme cost preferences|User is a prospective member|Edge|Yes|Premium: $0, Deductible: $0|1|Enter extreme values and submit|System processes and displays only plans meeting criteria, or a message if none available
+TC012|US31822|Demographic Input|Verify demographic and health needs input|User is a prospective member|Functional|Yes|Age: 40, Location: OH, Doctor: Dr. Adams, Medication: Lisinopril|1|Navigate to demographic input page|System displays fields for age, location, doctors, medications
+||||||||2|Enter data and submit|System validates and accepts input, proceeding to recommendations
+TC013|US31822|Demographic Input|Negative - Invalid age|User is a prospective member|Negative|Yes|Age: -1|1|Enter invalid age and submit|System displays error: "Invalid age"
+TC014|US31822|Demographic Input|Edge - Maximum field length|User is a prospective member|Edge|Yes|Doctor name: 100+ characters|1|Enter maximum length for doctor name and submit|System accepts or displays appropriate error without crashing
+TC015|US32306|Profile|Verify profile view|User is logged in|Functional|Yes|User with profile data|1|Navigate to profile page|System displays correct profile information
+TC016|US32307|Settings|Verify settings update|User is logged in|Functional|Yes|New notification preference|1|Go to settings, change preference, save|System updates and confirms setting change
+TC017|US32308|Transaction History|Verify transaction history view|User is logged in|Functional|Yes|User with transaction history|1|Navigate to transaction history|System displays all past transactions
+TC018|US32309|Search and Filter|Verify data search and filter|User is logged in|Functional|Yes|Search: "Diabetes", Filter: Date range|1|Enter search term and filter|System returns correct filtered data
+TC019|US32310|Export Reports|Verify report export|User is logged in|Functional|Yes|Report: Claims|1|Click export on claims report|System downloads report in selected format
+TC020|US32311|User Permissions|Verify permission management|Admin user logged in|Functional|Yes|Assign 'Editor' to user X|1|Navigate to permissions, assign role|System saves and reflects new permission
+TC021|US32312|System Logs|Verify system log view|Admin user logged in|Functional|Yes|Any log record|1|Navigate to system logs|System displays logs with timestamp, user, action
+TC022|US32304|Password Reset|Verify password reset|User on login page|Functional|Yes|Registered email|1|Click 'Forgot Password', enter email|System sends reset link to email
+TC023|US32305|Two-Factor Authentication|Verify 2FA enablement|User is logged in|Functional|Yes|Valid phone number|1|Navigate to security, enable 2FA|System sends code and confirms setup
+TC024|US32303|Login|Verify email login|User is registered|Functional|Yes|Valid email/password|1|Enter credentials, click login|System authenticates and redirects to dashboard
+TC025|US32983|NEW STORY TETS|Basic smoke test|System available|Functional|Yes|N/A|1|Access feature|Feature loads without error
+TC026|US32744|member 1|Basic smoke test|System available|Functional|Yes|N/A|1|Access feature|Feature loads without error

@@ -12,75 +12,13 @@ endobj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
 endobj
 5 0 obj
-<< /Length 3514 >>
+<< /Length 62 >>
 stream
 BT
 /F1 8 Tf
 35 750 Td
 12 TL
-(Scenario ID|Scenario Title|Test Case ID|Test Case Title|Preconditions|Test Type|Automation Feasible|) Tj
-T*
-(TC001|US32275|Plan Recommendation|Verify side-by-side plan comparison|User is logged into the CareSo) Tj
-T*
-(||||||||2|Review plan features and select a plan|Selected plan is highlighted and user can proceed t) Tj
-T*
-(TC002|US32275|Plan Recommendation|Verify navigation to enrollment after plan selection|User is on th) Tj
-T*
-(TC003|US32275|Plan Recommendation|Negative - No recommended plans|User has completed health needs bu) Tj
-T*
-(TC004|US32275|Plan Recommendation|Edge - Maximum number of plans|User qualifies for 10+ plans|Edge|Y) Tj
-T*
-(TC005|US32274|Plan Personalization|Verify member can input medications and providers|User is authent) Tj
-T*
-(||||||||2|Enter medication and provider information and submit|System accepts input, validates data,) Tj
-T*
-(TC006|US32274|Plan Personalization|Verify financial preference input|User is authenticated|Functiona) Tj
-T*
-(||||||||2|Enter preferences and submit|System saves preferences and updates recommendation criteria) Tj
-T*
-(TC007|US32274|Plan Personalization|Negative - Invalid medication entry|User is authenticated|Negativ) Tj
-T*
-(TC008|US32274|Plan Personalization|Edge - Large medication list|User is authenticated|Edge|Yes|Medic) Tj
-T*
-(TC009|US32273|Guided Enrollment|Verify guided workflow for plan selection|User is a prospective memb) Tj
-T*
-(||||||||2|Complete all steps and submit|System generates and displays personalized plan recommendati) Tj
-T*
-(TC010|US32273|Guided Enrollment|Negative - Missing required fields|User is a prospective member|Nega) Tj
-T*
-(TC011|US32273|Guided Enrollment|Edge - Extreme cost preferences|User is a prospective member|Edge|Ye) Tj
-T*
-(TC012|US31822|Demographic Input|Verify demographic and health needs input|User is a prospective memb) Tj
-T*
-(||||||||2|Enter data and submit|System validates and accepts input, proceeding to recommendations) Tj
-T*
-(TC013|US31822|Demographic Input|Negative - Invalid age|User is a prospective member|Negative|Yes|Age) Tj
-T*
-(TC014|US31822|Demographic Input|Edge - Maximum field length|User is a prospective member|Edge|Yes|Do) Tj
-T*
-(TC015|US32306|Profile|Verify profile view|User is logged in|Functional|Yes|User with profile data|1|) Tj
-T*
-(TC016|US32307|Settings|Verify settings update|User is logged in|Functional|Yes|New notification pref) Tj
-T*
-(TC017|US32308|Transaction History|Verify transaction history view|User is logged in|Functional|Yes|U) Tj
-T*
-(TC018|US32309|Search and Filter|Verify data search and filter|User is logged in|Functional|Yes|Searc) Tj
-T*
-(TC019|US32310|Export Reports|Verify report export|User is logged in|Functional|Yes|Report: Claims|1|) Tj
-T*
-(TC020|US32311|User Permissions|Verify permission management|Admin user logged in|Functional|Yes|Assi) Tj
-T*
-(TC021|US32312|System Logs|Verify system log view|Admin user logged in|Functional|Yes|Any log record|) Tj
-T*
-(TC022|US32304|Password Reset|Verify password reset|User on login page|Functional|Yes|Registered emai) Tj
-T*
-(TC023|US32305|Two-Factor Authentication|Verify 2FA enablement|User is logged in|Functional|Yes|Valid) Tj
-T*
-(TC024|US32303|Login|Verify email login|User is registered|Functional|Yes|Valid email/password|1|Ente) Tj
-T*
-(TC025|US32983|NEW STORY TETS|Basic smoke test|System available|Functional|Yes|N/A|1|Access feature|F) Tj
-T*
-(TC026|US32744|member 1|Basic smoke test|System available|Functional|Yes|N/A|1|Access feature|Feature) Tj
+(User Story Document.txt) Tj
 T*
 ET
 endstream

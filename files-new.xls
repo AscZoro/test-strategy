@@ -7,29 +7,21 @@
       <th>Module</th>
       <th>User Story ID</th>
       <th>Title</th>
-      <th>Priority\nAuthentication</th>
-      <th>US-001</th>
-      <th>Login Page</th>
-      <th>High\nDashboard</th>
-      <th>US-002</th>
-      <th>User Stats</th>
-      <th>Medium"</th>
-      <th></th>
+      <th>Priority</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>output_filename="new-content</td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td>Authentication</td>
+      <td>US-001</td>
+      <td>Login Page</td>
+      <td>High</td>
+    </tr>
+    <tr>
+      <td>Dashboard</td>
+      <td>US-002</td>
+      <td>User Stats</td>
+      <td>Medium</td>
     </tr>
   </tbody>
 </table></body></html>

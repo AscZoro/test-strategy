@@ -12,57 +12,19 @@ endobj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
 endobj
 5 0 obj
-<< /Length 2537 >>
+<< /Length 200 >>
 stream
 BT
 /F1 8 Tf
 35 750 Td
 12 TL
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Local Time Zone Conversion 	 Id: T) Tj
+(Document Export: new-content) Tj
 T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Data Pipeline Health Monitor -) Tj
+(Module,User Story ID,Title,Priority) Tj
 T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Confidence Threshold Filter - ) Tj
+(Authentication,US-001,Login Page,High) Tj
 T*
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Pagination Control - Variant 12 	 ) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Maximum Out-of-Pocket Cap - Variant 11 	 I) Tj
-T*
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Pagination Control - Variant 7 	 I) Tj
-T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Recommendation Engine Ranking ) Tj
-T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Custom Threshold Setting - Var) Tj
-T*
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Cancel Appointment Modal - Variant) Tj
-T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Predictive No-Show Score - Var) Tj
-T*
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Appointment Reminder Toggle - Vari) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Batch Claim Ingestion - Variant 10 	 Id: T) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Claim Line Item Split - Variant 18 	 Id: T) Tj
-T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Feature Attribution UI - Varia) Tj
-T*
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Cancel Appointment Modal - Variant) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Deductible Met Flow 	 Id: TC021 	 Descript) Tj
-T*
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Specialty Filter - Variant 21 	 Id) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Timely Filing Limit Edge - Variant 8 	 Id:) Tj
-T*
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Chronological Sorting 	 Id: TC001 ) Tj
-T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Anomaly Detection Alert 	 Id: ) Tj
-T*
-(	Work Item ID: 1572 	 Module: Claims Adjudication 	 Name: Negative - Inactive Enrollment 	 Id: TC003) Tj
-T*
-(	Work Item ID: 1571 	 Module: Patient Portal Appointments 	 Name: Accessibility - WCAG AA 	 Id: TC00) Tj
-T*
-(	Work Item ID: 1573 	 Module: AI Insights & Anomaly Detection 	 Name: Successful Insights Display 	 ) Tj
+(Dashboard,US-002,User Stats,Medium) Tj
 T*
 ET
 endstream

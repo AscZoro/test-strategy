@@ -1,4 +1,0 @@
-Module,User Story ID,Title,Description,Priority,Status
-Authentication,US-001,Login Page,Create user login screen with email and password fields,High,In Progress
-Authentication,US-002,Password Reset,Implement forgot password workflow via email verification,Medium,Backlog
-Dashboard,US-003,User Stats,Display active session counts and user metrics on main dashboard,Low,Pending

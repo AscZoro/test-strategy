@@ -1,0 +1,117 @@
+# Enterprise Test Strategy Plan
+
+**Project Release:** <Release Version, e.g., Release V1.0>  
+**Date:** <Date of Issue, e.g., 2026-07-14>  
+**Author:** <Your Name / Role>
+
+---
+
+## 1. Introduction
+This test strategy addresses the validation of Jira API authentication and error handling mechanisms, focusing on scenarios where the API returns a 401 Unauthorized error. The scope is limited to technical validation of authentication and error propagation, as business requirements for issue AD-488 are inaccessible due to Jira API authentication failure.
+
+---
+
+## 2. Change Control
+
+| Issue Date | Version | Details | Author |
+|---|---|---|---|
+| <2026-07-14> | 1.0 | Initial version for AD-488 | QA Director |
+
+---
+
+## 3. Test Scope
+
+### 3.2 Test Scope
+
+#### 3.2.1 In Scope
+- Jira API authentication validation
+- Error handling for unauthorized access (401)
+
+#### 3.2.2 Out of Scope
+- Functional or business requirements for issue AD-488 (not accessible)
+- Any features not related to authentication or error handling
+
+---
+
+## 4. Test Approach
+
+### 4.1 Test Types
+*Describe all the test types in this project and provide the general testing timeline.*
+
+##### Test Environments versus Test Types
+
+| Ref # | Test Type | Dev | QA | UAT | Pre-Prod | Prod |
+|---|---|---|---|---|---|---|
+| 2 | Automation Testing (PyTest, Playwright) | X | X |   |   |   |
+| 8 | Functional / Integration Testing | X | X |   |   |   |
+| 14 | Regression Testing |   | X |   |   |   |
+| 15 | Security Testing (OWASP ZAP) |   | X |   |   |   |
+| 13 | Performance Testing (JMeter) |   | X |   |   |   |
+
+### 4.2 Requirement Traceability Matrix
+<Describe how requirements / user stories will be mapped and traced dynamically with test cases.>
+
+### 4.3 Test Management
+<Define the operational test management procedures and execution lifecycle patterns.>
+
+#### 4.3.2 Test Repositories
+<Indicate where the test materials are stored, who manages the repository tool, and how tracking updates are maintained.>
+
+### 4.6 Test Environments
+- Staging environment with controlled Jira API access (ability to toggle authentication/authorization states)
+- Mock service or proxy to simulate 401 Unauthorized responses from Jira API
+- Test data matrix of API credentials (valid, expired, revoked, malformed)
+
+### 4.8.2 Maintaining Test Results
+<Indicate where and how long historical test execution logs are stored and tracked.>
+
+#### 4.9 Tools Table
+| Tool / Framework | Purpose | Test Type |
+|---|---|---|
+| PyTest | API authentication and negative testing | Automation, Functional |
+| Playwright | UI/API integration validation | Automation |
+| JMeter | SLA and performance simulation | Performance |
+| OWASP ZAP | Security scanning | Security |
+| tcconfig | Network condition simulation | Negative, Performance |
+
+---
+
+## 5. Data Management
+
+### 5.1 Data Availability
+| Test Type | Data Source | Environment | Data Type | Data Volume | Comments |
+|---|---|---|---|---|---|
+| Automation, Functional | Mocked Jira API, credential matrix | Staging | Valid/invalid tokens | Low | Simulate 401/200 responses |
+
+---
+
+## 6. Test Schedule / Milestone
+- Test script development: 2 days (1 QA automation engineer)
+- Environment setup and credential matrix: 1 day (DevOps support)
+- Test execution: 2 days (QA)
+- Results analysis and reporting: 1 day (QA lead)
+- Total estimated duration: 6 working days
+
+---
+
+## 7. Assumptions
+- Staging environment supports toggling authentication states.
+- Test data (credentials) can be safely injected and revoked.
+- All tools (PyTest, Playwright, JMeter, OWASP ZAP, tcconfig) are available and licensed.
+- DevOps and QA resources are available as scheduled.
+
+---
+
+## 8. Risks & Mitigations
+| Risk ID | Description | Impact | Likelihood | Mitigation Action | Owner |
+|---|---|---|---|---|---|
+| R1 | Staging environment cannot simulate all authentication states | High | Medium | Use mock proxy to inject 401 responses | QA Lead |
+| R2 | Credential matrix not representative of production | Medium | Medium | Review with Jira admin, use real revoked/expired tokens | QA Lead |
+| R3 | Tooling (e.g., OWASP ZAP, JMeter) not available or misconfigured | Medium | Low | Pre-validate toolchain, provide fallback scripts | DevOps |
+| R4 | Timeline slippage due to resource contention | Medium | Medium | Pre-allocate QA/DevOps, escalate early | Project Manager |
+| R5 | API rate limiting or lockout during negative testing | Low | Medium | Throttle test execution, coordinate with Jira admin | QA Lead |
+
+---
+
+## 9. Appendix
+<Section Details>

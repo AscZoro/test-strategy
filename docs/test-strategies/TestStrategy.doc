@@ -2,20 +2,21 @@
 
 **Date:** <Date of Issue, e.g., 2026-07-14>
 
-## 3. Change Control
+## 2. Change Control
 Issue Date | Version | Details | Author
 ---|---|---|---
 <Issue Date>
 
-## 4. Scope
+## 3. Test Scope
 ### 3.2.1 In Scope
-- API authentication validation
+- Jira API authentication validation
 - Error handling for missing description
 
 ### 3.2.2 Out of Scope
-- Functional testing of AD-488 requirements (not possible without description access)
+- Functional testing of AD-488 requirements (content unavailable)
+  - Reason: No requirement content available due to Jira API authentication failure.
 
-## 5. Test Approach
+## 4. Test Types and Traceability
 ### 4.1.1 Test Types
 *Describe all the test types in this project and provide the general testing timeline.*
 
@@ -24,7 +25,7 @@ Ref # | Test Type | Dev | QA | UAT | Pre-Prod | Prod
 2 | Automation Testing | X | X |   |   |   |
 8 | Functional / Integration Testing | X | X |   |   |   |
 14 | Regression Testing |   | X |   |   |   |
-15 | Security Testing | X | X |   |   |   |
+15 | Security Testing |   | X |   |   |   |
 
 ### 4.2 Requirement Traceability Matrix
 <Describe how requirements / user stories will be mapped and traced dynamically with test cases.>
@@ -38,49 +39,47 @@ Ref # | Test Type | Dev | QA | UAT | Pre-Prod | Prod
 #### 4.3.3 Recording Pass/Fail Results
 <Indicate the exact criteria for marking an automated or manual test case as pass or fail.>
 
-### 4.5 Test Data Management
-#### Data Requirements
+#### 4.8.2 Maintaining Test Results
+<Indicate where and how long historical test execution logs are stored and tracked.>
+
+### 4.9 Tools Table
+Tool | Purpose | Test Level | Owner
+---|---|---|---
+Playwright | UI/API automation | Automation, Integration | QA
+PyTest | API/Backend validation | Functional, Regression | QA
+JMeter | Performance/SLA simulation | Integration | QA
+OWASP ZAP | Security/negative testing | Security | QA
+tcconfig | Network condition simulation | Integration | QA
+
+## 5. Test Data Management
+Data Requirements
 <Identify the type, volume, and data source of test data required, along with masking, scrubbing, and seeding strategies.>
 
-#### Data Availability
 Test Type | Data Source | Environment | Data Type | Data Volume | Comments
 ---|---|---|---|---|---
-Functional / Integration Testing | Mocked Jira API | QA | Auth tokens, error payloads | Low | Simulate 401 and null description
-Security Testing | Test credential matrix | Dev, QA | Valid/invalid/expired tokens | Low | Coverage for all auth scenarios
-
-### 4.6 Test Environments
-<Provide hardware, software, and configuration requirements for each target runtime layout.>
+Functional / Integration | Jira API, Mock Service | Staging | Auth tokens, Issue metadata | Low | Simulate 401/403/missing desc
+Security | Jira API | Staging | Invalid/expired tokens | Low | Negative scenarios
 
 ## 6. Test Schedule / Milestone
-- Test Design & Environment Prep: 2 days
-- Script Development & Mock Setup: 2 days
-- Execution & Results Analysis: 2 days
-- Total Duration: 6 days
-- Resources: 1 QA Automation Engineer, 1 Test Lead
+- Test Design & Script Development: 2 days (1 QA Engineer)
+- Environment Setup & Data Prep: 1 day (QA + DevOps)
+- Execution & Reporting: 2 days (QA)
+- Total Duration: 5 days
 
-## 7. Assumptions
-- Test environments have stable connectivity to Jira API or mocks.
-- Test credentials for all required permutations are available.
-- Testers have access to logs and error traces.
+## 7. Test Environments
+<Provide hardware, software, and configuration requirements for each target runtime layout.>
 
-## 8. Quality Objectives
-- Validate API authentication and permissions.
-- Verify error handling for missing or inaccessible Jira issue descriptions.
+## 8. Assumptions
+- Jira API simulator or sandbox is available for negative testing.
+- Test credentials (valid/invalid/expired) are provisioned.
+- Logging and monitoring access is enabled for test runs.
 
 ## 9. Risk Mitigation Table
-Risk ID | Description | Impact | Likelihood | Mitigation Action
----|---|---|---|---
-R1 | Dynamic Jira API connectivity failures | High | Medium | Use mock/stub services for 401 and null description scenarios.
-R2 | Test credential matrix incomplete | Medium | Medium | Pre-seed all credential types and validate before execution.
-R3 | Ambiguous error messages (e.g., 'null - null') | High | High | Enhance log capture and assert on error message content.
-R4 | Timeline slippage due to environment setup | Medium | Medium | Parallelize environment prep and mock configuration.
-R5 | Inaccessible Jira description field | High | High | Focus only on authentication/error handling until access is restored.
+Risk ID | Description | Impact | Likelihood | Severity | Mitigation Action
+---|---|---|---|---|---
+R1 | Jira API authentication failures (401/403) block test coverage | High | High | Critical | Provision valid/invalid tokens, use API simulator for negative cases
+R2 | Description field missing due to upstream permission issues | Medium | High | Major | Use mock payloads, verify fallback handling in consumer
+R3 | Test data setup delays (credential provisioning) | Medium | Medium | Moderate | Pre-request all test credentials, escalate blockers to DevOps
+R4 | Logging/monitoring not enabled for test runs | Low | Medium | Minor | Confirm logging config before execution, add test hooks
+R5 | Timeline slippage due to environment unavailability | Medium | Medium | Major | Schedule environment slots in advance, use local mocks if blocked
 
-## 10. Tools Table
-Tool | Purpose
----|---
-Playwright | UI error rendering and validation
-PyTest | API and integration test automation
-JMeter | SLA and error response simulation
-OWASP ZAP | Security/authentication validation
-tcconfig | Network condition simulation

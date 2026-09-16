@@ -1,54 +1,46 @@
-# Enterprise Test Strategy Plan Template
-
 **Project Release:** <Release Version, e.g., Release V1.0>  
 **Date:** <Date of Issue, e.g., 2026-07-14>  
-Author | <Your Name / Role>
+Author | Senior QA Director & Release Risk Manager
 
 ---
 
-## 1. Introduction
-<Section Details>
+## 1. Introduction  
+This test strategy defines the validation approach for Jira API authentication and error handling for inaccessible issue descriptions, as encountered in Issue AD-488.
 
 ---
 
-## 2. References
-<Section Details>
+## 2. Project Overview  
+The project aims to ensure robust authentication to the Jira API and resilient handling of missing or unauthorized issue descriptions. Functional validation of AD-488 requirements is out of scope due to lack of description access.
 
 ---
 
-## 3. Scope
+## 3. Test Scope
 
 ### 3.2 Test Scope
 
 #### 3.2.1 In Scope
-- Jira API error handling
-- Authentication validation
+- Jira API authentication validation
+- Error handling for missing description
 
 #### 3.2.2 Out of Scope
-- Requirement extraction from inaccessible issues (explicitly excluded due to Jira authentication failure and missing description field)
+- Functional testing of AD-488 requirements (not possible without description)
 
 ---
 
-## 4. Testing Approach
+## 4. Test Approach
 
-### Change Control
-| Issue Date | Version | Details | Author |
-|---|---|---|---|
-| <Issue Date> |   |   |   |
+### 4.1 Test Types
 
 #### 4.1.1 Test Types
 *Describe all the test types in this project and provide the general testing timeline.*
 
 ##### Test Environments versus Test Types
-| Ref # | Test Type                     | Dev | QA | UAT | Pre-Prod | Prod |
-|-------|-------------------------------|-----|-----|-----|----------|------|
-| 2     | Automation Testing            | X   | X   |     |          |      |
-| 8     | Functional / Integration Testing| X | X   |     |          |      |
-| 14    | Regression Testing            |     | X   |     |          |      |
-| 15    | Security Testing              |     | X   |     |          |      |
-| 13    | Performance Testing           |     | X   |     |          |      |
-
----
+Ref # | Test Type | Dev | QA | UAT | Pre-Prod | Prod
+---|---|---|---|---|---|---
+2 | Automation Testing | X | X | | | 
+8 | Functional / Integration Testing | X | X | | | 
+14 | Regression Testing | | X | | | 
+15 | Security Testing | X | X | | | 
 
 ### 4.2 Requirement Traceability Matrix
 <Describe how requirements / user stories will be mapped and traced dynamically with test cases.>
@@ -66,18 +58,10 @@ Author | <Your Name / Role>
 
 ---
 
-#### Data Availability
-| Test Type | Data Source | Environment | Data Type | Data Volume | Comments |
-|-----------|------------|-------------|-----------|-------------|----------|
-| Automation, Functional, Security, Performance | Mock Jira API, Credential Matrix | Integration, Staging | Auth tokens, error payloads | Sufficient for negative/positive cases | Simulate 401, missing description |
-
----
-
-### 4.6 Test Environments
-- Integration/Staging environment with Jira API connectivity or controllable Jira API simulation
-- Mock service or stub for 401 Unauthorized and missing description
-- Credential matrix for valid, invalid, expired, and missing tokens
-- Log capture/monitoring access
+### 4.5 Test Data Management
+- Test data sheet with accessible and inaccessible Jira issue IDs
+- Credential matrix: valid, expired, invalid, insufficient permissions
+- Mock/stub service for HTTP 401 Unauthorized and missing description
 
 ---
 
@@ -87,60 +71,58 @@ Author | <Your Name / Role>
 ---
 
 ### 4.9 Tools Table
-| Tool         | Purpose                                 | Test Type(s)                      |
-|--------------|-----------------------------------------|-----------------------------------|
-| Playwright   | UI/API automation, negative scenarios   | Automation, Functional            |
-| PyTest       | API/service validation, error handling  | Functional, Regression            |
-| JMeter       | SLA/Performance simulation              | Performance                       |
-| OWASP ZAP    | Security validation                     | Security                          |
-| tcconfig     | Network condition simulation            | Negative, Performance             |
+| Tool | Purpose | Test Level |
+|------|---------|------------|
+| PyTest | API authentication, error handling | Integration, Functional |
+| Playwright | UI validation (if applicable) | Integration |
+| JMeter | Negative/Resilience, SLA simulation | Integration |
+| OWASP ZAP | Security/401 Unauthorized simulation | Security |
+| tcconfig | Network condition simulation | Integration |
 
 ---
 
-## 5. Quality Objectives
-- Validate Jira API authentication
-- Handle missing or inaccessible issue descriptions gracefully
+## 5. Change Control
+
+Issue Date | Version | Details | Author
+---|---|---|---
+<Issue Date> | | | Senior QA Director
 
 ---
 
 ## 6. Test Schedule / Milestone
-| Phase                | Start Date | End Date   | Resource(s)         |
-|----------------------|------------|------------|---------------------|
-| Test Planning        | <T0>       | <T0+2d>    | QA Lead             |
-| Environment Setup    | <T0+2d>    | <T0+4d>    | DevOps, QA          |
-| Script Development   | <T0+4d>    | <T0+8d>    | SDET, QA            |
-| Test Execution      | <T0+8d>    | <T0+12d>   | QA, SDET            |
-| Reporting & Closure  | <T0+12d>   | <T0+14d>   | QA Lead, Release Mgr|
+- Test design: 2 days
+- Environment setup: 1 day
+- Script development: 2 days
+- Execution: 2 days
+- Reporting: 1 day
+**Total duration:** 1 week
+**Resources:** 1 QA Automation Engineer, 1 Test Lead
 
 ---
 
-## 7. Assumptions
-- Test team has access to Jira API simulation or mock service
-- Credential matrix can be configured for all required states
-- Logging and monitoring tools are available
-- No requirement extraction from inaccessible issues is expected
+## 7. Roles & Responsibilities
+- QA Automation Engineer: Script development, execution
+- Test Lead: Planning, reporting, risk management
 
 ---
 
-## 8. Resource Estimate
-- 1 QA Lead (planning, reporting)
-- 1 SDET (automation, scripting)
-- 1 DevOps (environment setup)
-- 1 QA Analyst (manual/negative testing)
-- Estimated duration: 2 weeks
+## 8. Assumptions
+- Jira API endpoint and credentials are available for testing
+- Mock/stub services can be configured for negative scenarios
+- Test data can be provisioned for all credential states
 
 ---
 
-## 9. Risk Mitigation Table
-| Risk ID | Risk Description | Impact | Probability | Severity | Mitigation Action | Owner |
-|---------|------------------|--------|-------------|----------|-------------------|-------|
-| R1      | Dynamic Jira API endpoint changes or downtime | High   | Medium      | High     | Use mock/stub service for test continuity; monitor endpoint health | QA Lead |
-| R2      | Credential matrix not covering all negative cases | Medium | Medium      | Medium   | Review and expand credential scenarios; automate token generation | SDET |
-| R3      | Log capture/monitoring unavailable or incomplete | Medium | Low         | Medium   | Coordinate with DevOps for log access; add fallback logging | DevOps |
-| R4      | Timeline delays due to environment provisioning | Medium | Medium      | Medium   | Early environment request; parallelize setup with planning | QA Lead |
-| R5      | Test data not representative of real-world failures | Medium | Low        | Medium   | Use production-like data in mocks; review with stakeholders | QA Analyst |
+## 9. Risks & Mitigations
+| Risk ID | Description | Impact | Likelihood | Mitigation |
+|---------|-------------|--------|------------|------------|
+| R1 | Dynamic Jira API endpoint or credential rotation | High | Medium | Use environment variables and credential vaults; automate token refresh |
+| R2 | Unstable network or proxy failures during API calls | Medium | Medium | Use tcconfig to simulate and test network drops; implement retry logic |
+| R3 | Incomplete error propagation for 401 Unauthorized | High | Low | Add regression tests for all error paths; monitor logs for silent failures |
+| R4 | Test data provisioning delays (inaccessible issue IDs) | Medium | Medium | Pre-seed test data and use mocks for negative cases |
+| R5 | Tool integration/configuration issues (PyTest, Playwright, etc.) | Medium | Low | Validate toolchain in CI pipeline before execution |
 
 ---
 
-## 10. Appendix
-<Section Details>
+## 10. Approval
+<Define the approval process and stakeholders for sign-off.>

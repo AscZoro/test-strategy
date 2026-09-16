@@ -1,128 +1,99 @@
-**Project Release:** <Release Version, e.g., Release V1.0>  
-**Date:** <Date of Issue, e.g., 2026-07-14>  
-Author | Senior QA Director & Release Risk Manager
+# 1. Project Release
+**Release Version:** <Release Version, e.g., Release V1.0>
+**Date:** <Date of Issue, e.g., 2026-07-14>
 
----
+# 2. <Section Details>
 
-## 1. Introduction  
-This test strategy defines the validation approach for Jira API authentication and error handling for inaccessible issue descriptions, as encountered in Issue AD-488.
-
----
-
-## 2. Project Overview  
-The project aims to ensure robust authentication to the Jira API and resilient handling of missing or unauthorized issue descriptions. Functional validation of AD-488 requirements is out of scope due to lack of description access.
-
----
-
-## 3. Test Scope
-
-### 3.2 Test Scope
-
-#### 3.2.1 In Scope
-- Jira API authentication validation
-- Error handling for missing description
-
-#### 3.2.2 Out of Scope
-- Functional testing of AD-488 requirements (not possible without description)
-
----
-
-## 4. Test Approach
-
-### 4.1 Test Types
-
-#### 4.1.1 Test Types
-*Describe all the test types in this project and provide the general testing timeline.*
-
-##### Test Environments versus Test Types
-Ref # | Test Type | Dev | QA | UAT | Pre-Prod | Prod
----|---|---|---|---|---|---
-2 | Automation Testing | X | X | | | 
-8 | Functional / Integration Testing | X | X | | | 
-14 | Regression Testing | | X | | | 
-15 | Security Testing | X | X | | | 
-
-### 4.2 Requirement Traceability Matrix
-<Describe how requirements / user stories will be mapped and traced dynamically with test cases.>
-
----
-
-### 4.3 Test Management
-<Define the operational test management procedures and execution lifecycle patterns.>
-
-#### 4.3.2 Test Repositories
-<Indicate where the test materials are stored, who manages the repository tool, and how tracking updates are maintained.>
-
-#### 4.3.3 Recording Pass/Fail Results
-<Indicate the exact criteria for marking an automated or manual test case as pass or fail.>
-
----
-
-### 4.5 Test Data Management
-- Test data sheet with accessible and inaccessible Jira issue IDs
-- Credential matrix: valid, expired, invalid, insufficient permissions
-- Mock/stub service for HTTP 401 Unauthorized and missing description
-
----
-
-### 4.8.2 Maintaining Test Results
-<Indicate where and how long historical test execution logs are stored and tracked.>
-
----
-
-### 4.9 Tools Table
-| Tool | Purpose | Test Level |
-|------|---------|------------|
-| PyTest | API authentication, error handling | Integration, Functional |
-| Playwright | UI validation (if applicable) | Integration |
-| JMeter | Negative/Resilience, SLA simulation | Integration |
-| OWASP ZAP | Security/401 Unauthorized simulation | Security |
-| tcconfig | Network condition simulation | Integration |
-
----
-
-## 5. Change Control
-
+# 3. Change Control
 Issue Date | Version | Details | Author
 ---|---|---|---
-<Issue Date> | | | Senior QA Director
+<Issue Date>
 
----
+# 3.1 Testing Quality Objectives
+- Verify Jira API authentication and access permissions.
+- Ensure issue description is available for downstream processing.
 
-## 6. Test Schedule / Milestone
-- Test design: 2 days
-- Environment setup: 1 day
-- Script development: 2 days
-- Execution: 2 days
-- Reporting: 1 day
-**Total duration:** 1 week
-**Resources:** 1 QA Automation Engineer, 1 Test Lead
+# 3.2 Test Scope
+## 3.2.1 In Scope
+- Jira API authentication validation
+- Error handling for missing/unauthorized issue access
 
----
+## 3.2.2 Out of Scope
+- Requirement analysis for AD-488 (content unavailable)
+- Testing of business features described in AD-488
 
-## 7. Roles & Responsibilities
-- QA Automation Engineer: Script development, execution
-- Test Lead: Planning, reporting, risk management
+# 4. Test Strategy
+## 4.1 Test Approach
+Testing will focus on:
+- API/service integration layer to validate authentication outcomes during issue retrieval.
+- Workflow-control behavior to ensure downstream processing is blocked when the issue description is unavailable.
+- Negative-path coverage for 401 Unauthorized handling, error propagation, and traceable logs for failed access attempts.
+- Decision-based scenarios to verify only valid authentication and available description permit progression.
+- No business-feature or requirement-content testing (explicitly out of scope).
 
----
+### 4.1.1 Test Types
+Ref # | Test Type | Dev | QA | UAT | Pre-Prod | Prod
+---|---|---|---|---|---|---
+2 | Automation Testing | x | x |   |   |   |
+5 | Chaos Testing |   | x |   |   |   |
+15 | Security Testing |   | x |   |   |   |
 
-## 8. Assumptions
-- Jira API endpoint and credentials are available for testing
-- Mock/stub services can be configured for negative scenarios
-- Test data can be provisioned for all credential states
+## 4.2 Requirement Traceability Matrix
+<Describe how requirements / user stories will be mapped and traced dynamically with test cases.>
 
----
+## 4.3 Test Management
+<Define the operational test management procedures and execution lifecycle patterns.>
 
-## 9. Risks & Mitigations
-| Risk ID | Description | Impact | Likelihood | Mitigation |
-|---------|-------------|--------|------------|------------|
-| R1 | Dynamic Jira API endpoint or credential rotation | High | Medium | Use environment variables and credential vaults; automate token refresh |
-| R2 | Unstable network or proxy failures during API calls | Medium | Medium | Use tcconfig to simulate and test network drops; implement retry logic |
-| R3 | Incomplete error propagation for 401 Unauthorized | High | Low | Add regression tests for all error paths; monitor logs for silent failures |
-| R4 | Test data provisioning delays (inaccessible issue IDs) | Medium | Medium | Pre-seed test data and use mocks for negative cases |
-| R5 | Tool integration/configuration issues (PyTest, Playwright, etc.) | Medium | Low | Validate toolchain in CI pipeline before execution |
+### 4.3.2 Test Repositories
+<Indicate where the test materials are stored, who manages the repository tool, and how tracking updates are maintained.>
 
----
+### 4.3.3 Recording Pass/Fail Results
+<Describe the pass/fail criteria and reporting process.>
 
-## 10. Approval
-<Define the approval process and stakeholders for sign-off.>
+## 4.5 Test Data Management
+<Data Requirements>
+<Data Availability>
+Test Type | Data Source | Environment | Data Type | Data Volume | Comments
+---|---|---|---|---|---
+Security Testing | Mock Identity Provider | QA | User Roles | Low | For RBAC/401 scenarios
+Chaos Testing | Fault Injection Framework | QA | Fault Events | Low | Simulate connection drops
+Automation Testing | Log Aggregator | Dev/QA | Audit Logs | Low | Validate log integrity
+
+## 4.6 Test Environments
+- Log Aggregator (e.g., ELK Stack) for Audit Log Validation
+- Mock Identity Provider for RBAC Testing
+- Fault Injection Framework (e.g., Gremlin) for Resilience Testing
+- Isolated Security Sandbox Environment
+
+## 4.9 Tools Table
+Tool | Purpose | Test Type | Environment
+---|---|---|---
+Playwright | API/Integration Automation | Automation Testing | Dev, QA
+PyTest | Assertion/Validation | Automation Testing | Dev, QA
+JMeter | Negative Path/Load | Chaos Testing | QA
+OWASP ZAP | Security/Access Control | Security Testing | QA
+tcconfig | Network Fault Injection | Chaos Testing | QA
+
+# 5. <Section Details>
+
+# 6. Test Schedule / Milestone
+- Test Design & Script Development: 2 days (1 QA Engineer)
+- Environment Setup: 1 day (DevOps + QA)
+- Execution & Reporting: 2 days (QA Engineer)
+- Total Duration: 5 days
+
+# 7. Assumptions
+- Jira access will be restored for future cycles.
+- No business feature validation until requirements are available.
+
+# 8. <Section Details>
+
+# 9. Risk Mitigation Table
+Risk ID | Description | Impact | Likelihood | Mitigation Action
+---|---|---|---|---
+R1 | Jira API authentication failures block test execution | High | High | Validate credentials pre-execution; implement retry logic; escalate to Jira admin if persistent
+R2 | Issue description unavailable halts downstream processing | High | Medium | Gate workflow; alert stakeholders; pause pipeline for manual review
+R3 | Fault injection tools may disrupt shared QA environments | Medium | Medium | Isolate test runs; schedule off-peak; coordinate with environment owners
+R4 | Log aggregator misconfiguration leads to missed audit events | Medium | Low | Pre-validate log pipeline; monitor log ingestion; alert on missing events
+R5 | Security sandbox not isolated from production data | High | Low | Use dedicated test data; enforce environment segregation
+

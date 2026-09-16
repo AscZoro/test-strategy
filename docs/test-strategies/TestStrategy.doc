@@ -1,107 +1,123 @@
-**Project Release:**
-AD-488 Jira API Error Handling Validation
-**Date:** 2026-07-14
+# 1. Project Release
+Release V1.0
 
----
+# 2. Date
+2026-07-14
 
-### Change Control
-| Issue Date | Version | Details | Author |
-|------------|---------|---------|--------|
-| 2026-07-14 | V1.0 | Initial publication for AD-488 scope | QA Director |
+# 3. Change Control
+Issue Date | Version | Details | Author
+---|---|---|---
+2026-07-14 | 1.0 | Initial strategy for AD-488 (Jira API 401 Unauthorized) | QA Director
 
----
-
-## 3.2 Test Scope
-
-### 3.2.1 In Scope
+# 4. Scope
+## 4.1 In Scope
 - Jira API authentication validation
-- Error handling for missing description
+- Error handling for unauthorized access
 
-### 3.2.2 Out of Scope
-- Functional testing of AD-488 requirements (not possible without description)
+## 4.2 Out of Scope
+- Functional testing of AD-488 requirements (not available)
+- Any features dependent on Jira requirement content
 
----
+# 5. Quality Objectives
+- Validate Jira API authentication
+- Verify error handling for missing or inaccessible issues
 
-## 4.1.1 Test Types
-*Describe all the test types in this project and provide the general testing timeline.*
+# 6. Test Approach
+## 6.1 Testing Levels
+- API / Service Integration Level (Jira API authentication and response validation)
+- Application Error-Handling Level (consumer handling of unauthorized and missing issue responses)
+- End-to-End Integration Level (request-to-error-surface workflow for inaccessible Jira issues)
 
-#### Test Environments versus Test Types
-| Ref # | Test Type | Dev | QA | UAT | Pre-Prod | Prod |
-|-------|-------------------------------|-----|----|-----|----------|------|
-| 2     | Automation Testing            |  X  | X  |     |          |      |
-| 8     | Functional / Integration Testing | X | X |     |          |      |
-| 14    | Regression Testing            |     | X  |     |          |      |
-| 15    | Security Testing              |     | X  |     |          |      |
+## 6.2 Testing Types
+- Functional Testing
+- Negative Testing
+- Integration Testing
+- Regression Testing
 
----
+## 6.3 Test Design Techniques
+- Error Guessing (authentication failure and inaccessible resource scenarios)
+- Equivalence Partitioning (authorized vs unauthorized vs inaccessible request classes)
+- Decision Table Testing (mapping response conditions such as valid auth, invalid auth, and missing description to expected system handling)
+- State/Response Transition Testing (request outcome transitions from request initiation to 401 handling and user-visible error state)
 
-## 4.2 Requirement Traceability Matrix
-<Describe how requirements / user stories will be mapped and traced dynamically with test cases.>
+# 7. Test Environments
+- Integration/Staging environment with Jira API connectivity configuration
+- Mock/stub Jira service capable of returning 401 Unauthorized and missing-field payloads
+- Test credentials matrix covering valid, invalid, expired, and absent authentication tokens
+- Log/trace capture facilities to verify error propagation, masking, and observability
 
----
+# 8. Test Types Matrix
+Ref # | Test Type | Dev | QA | UAT | Pre-Prod | Prod
+---|---|---|---|---|---|---
+2 | Automation Testing | X | X |   |   |   |
+8 | Functional / Integration Testing | X | X |   |   |   |
+14 | Regression Testing |   | X |   |   |   |
+15 | Security Testing |   | X |   |   |   |
 
-## 4.3 Test Management
-<Define the operational test management procedures and execution lifecycle patterns.>
+# 9. Requirement Traceability Matrix
+<Section Details>
 
-### 4.3.3 Recording Pass/Fail Results
-<Indicate the exact criteria for marking an automated or manual test case as pass or fail.>
+# 10. Test Management
+## 10.1 Operational Procedures
+<Section Details>
 
----
+## 10.2 Test Repositories
+<Section Details>
 
-## Data Availability
+## 10.3 Recording Pass/Fail Results
+<Section Details>
 
-#### Data Availability Table
-| Test Type | Data Source | Environment | Data Type | Data Volume | Comments |
-|-----------|-------------|-------------|-----------|-------------|----------|
-| Automation, Functional | Mock Jira API, Real Jira API | QA, Dev | Auth tokens, Issue payloads | Low | Simulate 401, 403, 404, missing desc |
+# 11. Test Data Management
+<Section Details>
 
----
+# 12. Defect Management
+## 12.1 Defect SLA for Resolution
+Defect Severity | Timeframe for Analysis and Correction
+---|---
+Critical | 1 business day
+High | 2 business days
+Medium | 5 business days
+Low | 10 business days
 
-## 4.6 Test Environments
-- Integration or staging environment with controlled access to Jira API endpoints
-- Mock Jira service or API simulator capable of returning 200, 401, 403, 404, and empty-description payloads
-- Credential matrix covering valid user, invalid token, expired token, and insufficient-permission scenarios
-- Test data set containing issues with accessible descriptions, missing descriptions, and inaccessible descriptions
-- Centralized logging/trace capture to verify unauthorized responses are surfaced without downstream requirement parsing
-- Workflow control harness to validate Human-in-the-Loop Gate 2 pause/resume behavior
+# 13. Reporting
+## 13.1 Testing Metrics
+- Pass/fail ratios
+- Coverage percentage
+- Bug burn-down
 
----
+## 13.2 Maintaining Test Results
+<Section Details>
 
-## 6. Test Schedule / Milestone
-- Test design and scripting: 2 days
-- Environment setup and data prep: 1 day
-- Execution window: 2 days
-- Results analysis and reporting: 1 day
-- Core resources: 1 QA automation engineer, 1 test lead, 1 DevOps support
+# 14. Tools Table
+Tool | Purpose
+---|---
+PyTest | API authentication and error handling validation
+JMeter | Simulating SLA clock breaches and load
+OWASP ZAP | Security testing for unauthorized access
+tcconfig | Network condition simulation (e.g., latency, drops)
 
----
+# 15. Test Schedule / Milestone
+- Test design: 2 days
+- Environment setup: 1 day
+- Script development: 2 days
+- Execution: 2 days
+- Reporting: 1 day
+**Total duration:** 8 working days
+**Resources:** 1 QA Automation Engineer, 1 Test Lead
 
-## 7. Assumptions
-- Jira API endpoint is reachable from test environments
-- Mock service can simulate all required error states
-- Credentials for all test cases are available
-- Human-in-the-Loop Gate 2 approval will be provided in a timely manner
+# 16. Assumptions
+- Test environments and credentials are available
+- Mock/stub Jira API endpoints can be configured
+- Required tools (PyTest, JMeter, OWASP ZAP, tcconfig) are accessible
 
----
+# 17. Risk Mitigation Table
+Risk Description | Impact | Likelihood | Mitigation Action
+---|---|---|---
+Dynamic Jira API endpoint changes | High | Medium | Use environment variables and config-driven endpoints; validate before each run
+Authentication token expiry during test window | Medium | High | Automate token refresh and monitor expiry logs
+Network instability (e.g., connection drops) | Medium | Medium | Use tcconfig to simulate and handle network faults in test runs
+SLA processing latency in error propagation | Medium | Medium | Use JMeter to simulate load and measure error response times
+Missing or delayed test environment provisioning | High | Low | Pre-schedule environment setup and validate readiness before test execution
 
-## 9. Risk Mitigation Table
-| Risk ID | Description | Impact | Likelihood | Severity | Mitigation Action | Owner |
-|---------|-------------|--------|------------|----------|-------------------|-------|
-| R1 | Jira API authentication failures (401/403) | High | Medium | High | Pre-validate all credentials; use mock API for negative cases | QA Lead |
-| R2 | Missing or inaccessible issue descriptions | Medium | High | Medium | Ensure error handling logic is robust; log all failures | QA Engineer |
-| R3 | Test data setup delays | Medium | Medium | Medium | Prepare test data in advance; use mock payloads if needed | Test Lead |
-| R4 | Human-in-the-Loop approval latency | Low | Medium | Low | Notify stakeholders early; set approval SLAs | Project Manager |
-
----
-
-## 4.9 Tools Table
-| Tool / Framework | Purpose |
-|------------------|---------|
-| PyTest           | API and negative testing automation |
-| Playwright       | UI validation (if applicable) |
-| JMeter           | Simulate SLA clock breaches, load |
-| OWASP ZAP        | Security/authorization validation |
-| tcconfig         | Network condition simulation |
-
----
-
+# 18. Human-in-the-Loop Gate
+<Section Details>

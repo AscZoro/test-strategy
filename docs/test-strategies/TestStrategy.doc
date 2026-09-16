@@ -1,129 +1,127 @@
-# Enterprise Test Strategy Plan
+**Project Release:** <Release Version, e.g., Release V1.0>
 
-**Project Release:** <Release Version, e.g., Release V1.0>  
-**Date:** <Date of Issue, e.g., 2026-07-14>  
-**Author:** <Your Name / Role>
+**Date:** <Date of Issue, e.g., 2026-07-14>
 
 ---
 
-## 1. Introduction
-This test strategy addresses the validation of Jira API authentication and error handling for missing or inaccessible issue descriptions, as outlined in Issue AD-488. The plan is constrained by the absence of detailed business requirements due to Jira API access errors.
+## Change Control
+
+| Issue Date   | Version | Details | Author     |
+|--------------|---------|---------|------------|
+| <Issue Date> |         |         |            |
 
 ---
 
-## 2. Objectives
-- Validate Jira API authentication and access permissions.
-- Verify error handling for missing or inaccessible issue descriptions.
+# 1. Scope
+- API authentication validation
+- Error handling for missing description
+- Constraints:
+  - Jira API access is unauthorized for this issue key.
+  - Description field is unavailable.
+- Out of Scope:
+  - Functional testing of AD-488 requirements (not possible without description)
 
----
+# 2. Test Approach
+- Testing Levels:
+  - API / Backend Integration Level (Jira REST API authentication layer)
+  - Error Handling / Exception Management Level (401 response processing)
+  - System Integration Level (End-to-end authentication flow validation)
+- Testing Types:
+  - API Authentication & Authorization Testing
+  - Negative Testing (Unauthorized access scenarios)
+  - Error Handling & Recovery Testing
+  - Security Testing (Permission validation)
+- Test Design Techniques:
+  - Equivalence Partitioning (Valid vs Invalid credentials, Active vs Expired tokens)
+  - Error Guessing (Common authentication failure scenarios)
+  - State Transition Testing (Authentication state changes: Unauthenticated → Authenticated → Token Expired)
+  - Boundary Value Analysis (Token expiration thresholds, API rate limits)
+- Environments Needed:
+  - Jira API test environment with configurable authentication states
+  - Mock Jira API service to simulate 401, 403, and 200 response codes
+  - Test credential matrix (valid tokens, expired tokens, invalid tokens, missing tokens)
+  - API monitoring tools for capturing authentication headers and response payloads
+  - Isolated test instance with controlled permission sets for authorization testing
+- Approach Description:
+  The testing approach prioritizes validation of API authentication mechanisms and error handling robustness when encountering 401 Unauthorized responses.
+  1. Authentication Flow Testing: Verify proper handling of valid credentials, expired tokens, invalid API keys, and missing authorization headers
+  2. Error Response Validation: Ensure 401 errors return appropriate error messages, status codes, and do not expose sensitive authentication details
+  3. Permission Boundary Testing: Validate that unauthorized access attempts are properly blocked and logged
+  4. Recovery Path Testing: Verify system behavior when transitioning from unauthorized to authorized states
+  Equivalence Partitioning will categorize authentication states (valid/invalid/expired), while State Transition Testing will validate the authentication lifecycle. Error Guessing techniques will explore edge cases like malformed tokens, concurrent authentication attempts, and token refresh scenarios. The approach explicitly excludes functional testing of AD-488 business requirements due to unavailable description data, maintaining strict adherence to the defined scope boundaries.
 
-## 3. Scope
+# 3. Quality Objectives
+- Validate API authentication and access permissions.
+- Verify error handling for missing or inaccessible Jira issue descriptions.
 
-### 3.1 In Scope
-- Jira API authentication validation
-- Error handling for unauthorized access
+# 4. Test Types and Tools
 
-### 3.2 Out of Scope
-- Functional testing of AD-488 requirements (requirements not available)
-
----
-
-## 4. Test Approach
-
-### 4.1 Test Types
-
-#### 4.1.1 Test Types
-The following test types will be executed to cover the defined scope.
-
+## 4.1 Test Types Matrix
 Ref # | Test Type | Dev | QA | UAT | Pre-Prod | Prod
 ---|---|---|---|---|---|---
-2 | Automation Testing | X | X |  |  |  |
-8 | Functional / Integration Testing | X | X |  |  |  |
-14 | Regression Testing |  | X |  |  |  |
-15 | Security Testing | X | X |  |  |  |
+2 | Automation Testing (API, Auth, Error) | X | X |   |   |   |   
+13 | Performance Testing (SLA, Latency) |   | X |   |   |   |   
+15 | Security Testing (Permission, Auth) |   | X |   |   |   |   
 
-#### 4.1.2 General Testing Timeline
-- Test design: 2 days
-- Script development: 3 days
-- Execution: 2 days
-- Reporting: 1 day
+## 4.2 Requirement Traceability Matrix
+<Section Details>
 
-### 4.2 Requirement Traceability Matrix
-<Describe how requirements / user stories will be mapped and traced dynamically with test cases.>
+## 4.3 Test Management
+<Section Details>
 
-### 4.3 Test Management
-<Define the operational test management procedures and execution lifecycle patterns.>
+## 4.4 Test Case Management
+<Section Details>
 
-#### 4.3.2 Test Repositories
-<Indicate where the test materials are stored, who manages the repository tool, and how tracking updates are maintained.>
+## 4.5 Test Data Management
+<Section Details>
 
-#### 4.3.3 Recording Pass/Fail Results
-<Indicate the exact criteria for marking an automated or manual test case as pass or fail.>
+## 4.6 Test Environments
+<Section Details>
 
-### 4.6 Test Environments
-- Test environment with Jira API integration configured using valid and invalid authentication tokens
-- Mock/stub service or controllable API gateway to simulate 401 Unauthorized responses and null/missing issue description payloads
-- Test accounts matrix covering authorized user, unauthorized user, expired-token user, and permission-restricted user profiles
-- Application logging/monitoring access to verify captured API failure details without exposing sensitive credentials
+## 4.7 Test Execution
+<Section Details>
 
-#### Data Availability
-Test Type | Data Source | Environment | Data Type | Data Volume | Comments
----|---|---|---|---|---
-Functional / Integration | Mock Jira API | QA | Auth tokens, null/missing payloads | Low | Simulate 401, null desc
-Security | Mock Jira API | QA | Invalid/expired tokens | Low | Simulate unauthorized access
+## 4.8 Test Results Management
+<Section Details>
 
-### 4.8.2 Maintaining Test Results
-<Indicate where and how long historical test execution logs are stored and tracked.>
+## 4.9 Tools Table
+| Tool         | Purpose                                 | Area                |
+|--------------|-----------------------------------------|---------------------|
+| Playwright   | UI/API Automation                       | Automation Testing  |
+| PyTest       | API/Backend Validation                  | Automation Testing  |
+| JMeter       | Performance/SLA Simulation              | Performance Testing |
+| OWASP ZAP    | Security/Permission Validation          | Security Testing    |
+| tcconfig     | Network Condition Simulation            | Performance Testing |
 
-### 4.9 Tools Table
-Tool | Purpose
----|---
-Playwright | UI error message validation
-PyTest | API authentication and error handling automation
-JMeter | Simulate SLA clock breaches and load
-OWASP ZAP | Security and unauthorized access testing
-tcconfig | Network condition simulation (optional)
+# 5. Resource & Effort Estimate
+- 1 QA Automation Engineer (API/Backend) – 2 weeks
+- 1 Security Tester – 1 week
+- 1 Performance Engineer – 1 week
+- Total Duration: 3 weeks (parallelizable)
 
----
+# 6. Test Schedule / Milestone
+- Week 1: Test environment setup, credential matrix prep, negative/positive API auth test scripts
+- Week 2: Security/permission boundary tests, error handling validation, performance/SLA simulation
+- Week 3: Results review, defect triage, regression, and final reporting
 
-## 5. Test Schedule / Milestone
-- Test design: 2026-07-15 to 2026-07-16
-- Script development: 2026-07-17 to 2026-07-19
-- Execution: 2026-07-20 to 2026-07-21
-- Reporting: 2026-07-22
+# 7. Assumptions
+- Test credentials and environments are available and stable
+- Mock Jira API service can be configured for all required auth states
+- Tooling access (Playwright, PyTest, JMeter, OWASP ZAP, tcconfig) is provisioned
 
----
+# 8. Dependencies
+- Jira API endpoint availability
+- Test credential provisioning
+- Mock service deployment
 
-## 6. Risks & Mitigations
-Risk | Impact | Likelihood | Severity | Mitigation
----|---|---|---|---
-Jira API authentication failures due to expired/invalid tokens | Test execution blocked | High | High | Pre-generate valid/invalid tokens, automate token refresh
-Dynamic changes in Jira API response structure | Test script breakage | Medium | High | Use schema validation, monitor API changelogs
-Network instability during test runs | Flaky test results | Medium | Medium | Use tcconfig to simulate/recover from network issues
-Unauthorized access errors not handled gracefully | User-facing errors, missed defects | Medium | High | Expand negative test coverage, monitor logs
-Missing description payloads not handled | Application crash or poor UX | Medium | High | Add null/missing checks, validate fallback messaging
+# 9. Risk Mitigation Table
+| Risk ID | Description | Impact | Probability | Severity | Mitigation Action | Owner |
+|---------|-------------|--------|-------------|----------|-------------------|-------|
+| R1      | Dynamic Jira API endpoint instability | High   | Medium      | High     | Use mock service fallback for endpoint outages | QA Lead |
+| R2      | Test credential provisioning delays   | Medium | Medium      | Medium   | Request credentials in advance, escalate to IT | QA Lead |
+| R3      | Tool access/configuration issues      | Medium | Low         | Medium   | Pre-validate tool access, maintain backup scripts | QA Lead |
+| R4      | SLA/latency test environment not available | Medium | Low    | Medium   | Simulate with tcconfig, coordinate with infra team | Perf Eng |
+| R5      | Reviewer timeout during validation loop | Medium | Medium | Medium | Implement reviewer reminders, auto-escalate after 24h | QA Lead |
 
----
-
-## 7. Assumptions
-- Test environments and mock services are available and stable.
-- Test accounts with required permissions are provisioned.
-- Access to application logs and monitoring is granted.
-- No business requirements for AD-488 are available.
-
----
-
-## 8. Change Control
-Issue Date | Version | Details | Author
----|---|---|---
-2026-07-14 | 1.0 | Initial strategy for AD-488 Jira API error handling | QA Director
-
----
-
-## 9. Approvals
-<Pending approval from QA Director, Release Manager, and Product Owner.>
-
----
-
-## Appendix
-<References, glossary, and additional information.>
+# 10. Glossary
+<Section Details>

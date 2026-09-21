@@ -1,0 +1,226 @@
+Project Release: AD-488
+Date: 2026-09-21
+Author: Senior QA Director / Release Risk Manager
+
+| Issue Date | Version | Details | Author |
+|---|---|---|---|
+| 2026-09-21 | 1.0 | Initial comprehensive enterprise test strategy publication for avatar upload, crop, malware scanning, gateway enforcement, storage persistence, and CDN synchronization workflow. | Senior QA Director / Release Risk Manager |
+
+# 1. Scope
+
+This strategy governs verification of the authenticated avatar upload and crop capability for Issue AD-488 across the full request path from browser interaction through gateway admission, synchronous malware inspection, structural file validation, cloud persistence, CDN invalidation, and dynamic UI propagation. The scope is intentionally constrained to a single high-resolution avatar transaction and is centered on the architecture described in the approved business and technical handoff. The governing principle for this plan is that the browser is not a transformation engine. The front-end is permitted to present controls, collect the file, and transmit the raw binary, but all material image handling and trust decisions are performed on controlled backend components. This has direct testing implications: validation must not stop at user interface rendering or API response codes, but must prove the correct routing path, execution order, and infrastructure side effects across every backend control point.
+
+A primary architectural concern in scope is access gating. The avatar modification interface must remain hidden or disabled whenever a fresh, unexpired authentication token is not present in the browser cookie session payload. This means the testing scope includes both presentation-layer gating and gateway-layer enforcement. It is not sufficient to verify that a button disappears for unauthenticated users; the strategy must also prove that forged, stale, missing, near-expiry, and replayed token conditions are rejected by the dedicated API Gateway using the expected 401 Unauthorized response contract and the standard unauthorized block message. The gateway itself is a scoped component because it is the first enforceable trust boundary for upload admission, request filtering, bandwidth protection, and downstream service isolation.
+
+The second major architectural theme in scope is controlled ingress and server-side processing discipline. Upload transactions must traverse the dedicated API Gateway path and may not bypass it through alternate hosts, direct service addressing, or misconfigured backend routes. The gateway must enforce payload-size constraints, authentication state, and admission filtering before the request enters deeper processing layers. After gateway admission, the platform must synchronously perform inline malware inspection and deep file header parsing using structural file signature validation rather than extension trust. Because the implementation explicitly forbids client-side compression, scaling, or canvas manipulation, the strategy must also include evidence collection proving the browser transfers a raw binary payload without mutation and that any crop operation represented in the user flow is executed or recorded on the backend service side rather than through browser-resident image processing logic.
+
+The final major scope element is downstream consistency after successful persistence. Validated avatar images are stored into specialized cloud bucket folders within the authorized cloud ecosystem only, and that write event must trigger immediate CDN edge invalidation so that profile surfaces and header bars display the updated avatar without full page reload. Testing therefore extends beyond storage success into cache coherency verification, stale-edge elimination, and asynchronous UI state refresh behavior. The 2.0-second SLA under standard 4G network conditions applies to the complete chain of upload transport, gateway handling, malware scan, persistence, invalidation, and public profile availability. For this reason, the scope includes instrumented timing collection at each checkpoint and cross-session visual propagation checks across multiple active user views.
+
+## 1.1 In Scope
+- Authenticated avatar upload flow
+- Avatar crop capability as exposed in the user story and validated as server-side processing or backend-recorded crop behavior
+- Front-end access gating for avatar modification interface
+- Dedicated API Gateway routing and bypass-prevention controls for upload transactions
+- Gateway authentication rejection and standard 401 Unauthorized block messaging
+- Server-side image ingestion handling
+- Raw binary transfer verification without client-side compression or transcoding
+- Synchronous inline malware inspection
+- Deep file header and magic-number validation
+- 5MB upload size boundary enforcement, including exact 5.00MB pass and 5.01MB fail conditions
+- JPEG and WebP whitelist enforcement
+- Authorized cloud bucket storage verification limited to approved cloud ecosystem
+- Immediate CDN cache invalidation after successful upload
+- Dynamic UI synchronization across active views and header bars
+- End-to-end SLA validation under 4G proxy restriction
+
+## 1.2 Out of Scope
+- Client-side compression tools
+- Local image scaling engines
+- Front-end canvas manipulation scripts as an implementation feature
+- Processing of PNG files
+- Processing of SVG files
+- Processing of GIF files
+- Processing of raw design files
+- Concurrent batch uploads
+- Multi-image profile header adjustments
+- Storage infrastructures outside the authorized cloud ecosystem
+
+# 3. Objectives
+
+The objective of this strategy is to provide defensible, auditable verification that the avatar upload capability behaves safely, correctly, and within operational performance limits under realistic user and infrastructure conditions. The first objective is to prove access control integrity from the browser through the API Gateway. This includes validation that authenticated users with a fresh, unexpired session token can discover and use the avatar workflow, while users with missing, expired, near-expiry, malformed, or replayed cookies are blocked both visually and transactionally. The objective extends to demonstrating that unauthorized sessions receive the standardized 401 Unauthorized handling path, including gateway rejection and the expected UI block message contract, with no accidental exposure of upload controls or backend endpoints.
+
+The second objective is to prove data integrity and execution ordering across the server-side ingestion chain. The front end must transmit the raw image binary without browser-side compression, transformation, or local rendering-based mutation. The dedicated gateway must be the only admissible route into the pipeline, and size-based enforcement for 5MB constraints must occur at the gateway boundary quickly enough to avoid wasteful downstream load. Once admitted, the system must perform malware scanning synchronously and complete deep file signature inspection before persistence. This objective requires timestamped evidence that malware scan completion and header validation precede storage writes and that disguised files renamed as JPEG or WebP are rejected based on structural bytes, not file extension strings.
+
+The third objective is to prove post-persistence distribution correctness and freshness. A successful write must land in the designated specialized cloud bucket location within the authorized provider boundaries and trigger immediate CDN invalidation so that new content supersedes stale edge cache copies. The strategy must verify that profile pages, account menus, and header bars update through dynamic DOM refresh without full browser reload, and that multiple active sessions converge on the new avatar without delay inconsistent with the two-second end-to-end service objective. This objective also covers the prevention of cache desynchronization, ensuring that edge nodes do not continue serving previous assets after invalidation requests have been issued.
+
+The fourth objective is to establish a release-management control framework that ties together requirements, defects, risk mitigation, automation, observability, and human approval checkpoints. The strategy is not merely to detect bugs, but to make release readiness measurable. It must produce traceability from each acceptance criterion to tests, ensure CI/CD gates prevent unsafe deployment, and support a controlled pause state for Human-in-the-Loop Gate 3 pending manual validation approval. The combined outcome is a technical specification and operating model that allows engineering, QA, security, and release stakeholders to determine whether AD-488 is fit for promotion with known residual risk explicitly documented.
+
+# 4. Test Approach
+
+## 4.1.1 Test Types
+Describe all the test types in this project and provide the general testing timeline.
+
+### Functional Testing
+Functional testing will validate the user-visible and service-visible behavior of the avatar workflow across the Component/UI, API, Service/Integration, and System/E2E layers. Execution will begin in QA using seeded authenticated and unauthenticated session states, then expand into UAT and Pre-Prod once contract stability is confirmed. At the UI layer, Playwright will verify that avatar controls are hidden when no fresh cookie-based session exists and become enabled only when a valid token is present. At the API layer, PyTest-based service tests will call the gateway-backed upload endpoint with controlled token permutations, size-boundary files, and valid JPEG and WebP assets. Integration stages will validate ordered execution from gateway admission to malware scan to header validation to storage to CDN purge. Functional data includes clean JPEG and WebP files under the threshold, exactly 5.00MB files, and synchronized multi-session browser views. Evidence collection will include DOM snapshots, HAR files, gateway logs, storage events, purge notifications, and end-state asset URL verification to ensure behavior matches acceptance criteria without reliance on informal manual observation.
+
+### Security Testing
+Security testing will focus on enforcing trust boundaries around authentication, gateway routing, malware inspection, structural file validation, and storage confinement within the authorized cloud ecosystem. This testing will be performed in QA, a service-integration environment, and Pre-Prod, where OWASP ZAP and PyTest security harnesses can exercise both browser and API attack surfaces while preserving auditability. The execution model will include token tampering, expired cookie replay, near-expiry clock-skew conditions, direct-service bypass attempts, spoofed MIME headers, renamed script payloads, malformed binaries, and malware-positive samples approved for safe use. Clean-room sample sets will include benign text files renamed as .jpg, executable-like binaries with forged content types, truncated JPEGs, malformed WebP assets, and traffic directed at alternate backend hosts to prove gateway exclusivity. Security testing must also confirm that uploads rejected at the gateway do not produce scanner invocations, storage writes, or CDN events. ZAP will evaluate request tampering and authorization weaknesses, while log correlation will confirm that server-side controls are engaged in the correct order and that no policy bypass path exists under hostile inputs.
+
+### Negative Testing
+Negative testing will intentionally supply invalid, malformed, unsupported, mistimed, and policy-breaking inputs to verify that the platform fails safely and predictably. This suite will run continuously in QA and nightly in Pre-Prod using PyTest and Playwright, with integration observability enabled so that every rejection path can be correlated across gateway, scan, storage, and UI layers. Inputs will include missing authentication cookies, expired tokens, near-expiry tokens affected by clock skew, oversize payloads at 5.01MB and above, unsupported file categories, renamed text files, malformed header byte streams, malware-positive samples, interrupted uploads, and stale-client attempts to force cached avatar display after a successful replacement. Data requirements include deterministic invalid assets, traffic-shaping profiles, and session matrices across browsers. Negative testing will specifically prove that over-limit payloads are instantly dropped at the gateway rather than rejected downstream, that unauthorized sessions receive the standard 401 message contract, and that no partial persistence or cache invalidation occurs after a failed transaction. The emphasis is on strong failure isolation and prevention of hidden side effects.
+
+### Boundary Testing
+Boundary testing will validate that the system behaves correctly at the precise acceptance thresholds defined by the story, particularly the 5MB upload cap and the authentication freshness decision points. Execution will occur in QA and Pre-Prod with controlled data fabrication so file sizes can be generated just below 5.00MB, exactly at 5.00MB, and just above at 5.01MB or more. Session data will include valid, almost-expired, and expired tokens to explore authorization cutover boundaries under realistic clock-skew assumptions. PyTest will drive direct API assertions against gateway responses, while Playwright will confirm the corresponding interface messages and control states. Additional boundary sets will cover minimally valid JPEG and WebP files, large-dimension but compliant images, and binary streams whose first bytes nearly resemble valid magic numbers but diverge before full signature confirmation. Boundary evidence must show that threshold values are interpreted consistently across UI hints, gateway admission logic, backend validation services, and observability logs. Timing boundaries will also be measured by decomposing the two-second SLA into sub-budgets for transport, security inspection, persistence, invalidation, and UI refresh propagation.
+
+### Integration Testing
+Integration testing will validate the correctness of the end-to-end orchestration among the browser client, API Gateway, malware-scanning service, file-signature validator, authorized cloud storage bucket, CDN invalidation mechanism, and UI synchronization channel. This work will run in a service-integrated QA environment and then in Pre-Prod with production-like infrastructure policies. The execution pattern will use correlation identifiers propagated from the initial upload request through each downstream event so that sequence integrity can be proven. Test data will include clean files, infected samples, spoofed-header binaries, and exact-threshold files. The suite will verify that the front-end sends a raw binary, that the gateway is the only admissible entry point, that scan completion timestamps precede storage writes, that successful storage emits the expected bucket event, and that CDN purge requests reference the updated object path. Browser tests in multiple sessions will then confirm dynamic avatar refresh without full page reload. Integration results are only considered passing when logs, events, and user-facing outcomes all align and no out-of-order behavior or hidden side effect is detected.
+
+### Performance Testing
+Performance testing will measure whether the complete upload-to-distribution chain can satisfy the strict 2.0-second SLA under a standard 4G network-throttled profile. This testing will be executed primarily in Pre-Prod using JMeter for API throughput and latency collection, Playwright for real-browser timing, and tcconfig to impose deterministic network shaping representative of constrained mobile conditions. The dataset will include valid JPEG and WebP files close to the upper file-size boundary, because those inputs represent the highest realistic processing cost within scope. Measurements will segment total elapsed time into upload transport, gateway decision, malware scan duration, file-signature validation, storage commitment, CDN invalidation acknowledgment, and browser-visible avatar refresh. Additional runs will compare warm versus cold cache behavior to ensure the purge mechanism does not create hidden latency regressions. Performance testing also includes resilience checks for scanner timeout behavior and gateway back-pressure under moderate parallel demand, while respecting the functional scope of single avatar upload transactions per request. A pass requires both aggregate SLA compliance and absence of performance-induced correctness failures such as stale avatar display or duplicate writes.
+
+| Ref # | Test Type | Dev | QA | UAT | Pre-Prod | Prod |
+|---|---|---|---|---|---|---|
+| 1 | Accessibility Testing |  |  |  |  |  |
+| 2 | Automation Testing | X | X |  | X |  |
+| 3 | BCP / DR Testing |  |  |  |  |  |
+| 4 | Business E2E Testing |  | X | X | X |  |
+| 5 | Chaos Testing |  |  |  |  |  |
+| 6 | Compliance / Controls Testing |  | X |  | X |  |
+| 7 | Data Quality |  | X |  | X |  |
+| 8 | Functional / Integration Testing | X | X | X | X |  |
+| 9 | Infrastructure Testing |  | X |  | X |  |
+| 10 | IT E2E Testing |  | X |  | X |  |
+| 11 | Journey Testing |  | X | X | X |  |
+| 12 | Parallel Testing |  |  |  |  |  |
+| 13 | Performance Testing |  | X |  | X |  |
+| 14 | Regression Testing | X | X |  | X |  |
+| 15 | Security Testing |  | X |  | X |  |
+| 16 | Smoke Testing (Production) |  |  |  |  | X |
+| 17 | State Readiness Testing |  | X |  | X |  |
+| 18 | UAT / Ops Testing |  |  | X | X |  |
+| 19 | Unit / Configuration testing | X |  |  |  |  |
+
+## 4.2 Requirement Traceability Matrix
+<Describe how requirements / user stories will be mapped and traced dynamically with test cases.>
+
+| Requirement ID | Requirement Description | Test Level | Test Type | Automation ID | Status |
+|---|---|---|---|---|---|
+| AC-01 | Valid fresh token required to view/interact with upload controls | Component/UI, API | Functional, Security | PW-AUTH-001 / API-AUTH-001 | Planned |
+| AC-01 | Missing/expired token rejected with 401 and standard block message | API, System/E2E | Security, Negative | API-AUTH-002 / PW-AUTH-003 | Planned |
+| AC-02 | Up to and including 5.00MB accepted | API, Integration, E2E | Functional, Boundary | API-SIZE-001 / INT-SIZE-001 | Planned |
+| AC-02 | 5.01MB and above instantly dropped at gateway | API, Integration | Negative, Boundary | API-SIZE-002 / INT-GW-004 | Planned |
+| AC-03 | JPEG and WebP only | API, Integration | Functional, Negative | API-FMT-001 | Planned |
+| AC-03 | Magic-number validation rejects spoofed files | Service/Integration | Security, Negative | INT-SIG-002 | Planned |
+| AC-04 | End-to-end path completes within 2.0 seconds under 4G | System/E2E, Performance | Performance | PERF-E2E-001 | Planned |
+| AC-05 | Updated avatar syncs across active views/header bars | UI, E2E | Functional, Integration | PW-SYNC-001 | Planned |
+| ARCH-01 | Raw binary transfer with no client-side compression/transcoding | UI, API | Integration, Security | PW-NET-002 / API-BIN-001 | Planned |
+| ARCH-02 | Crop execution is backend-side or backend-recorded, not browser-processed | UI, Integration | Functional, Security | INT-CROP-001 | Planned |
+| ARCH-03 | Upload must traverse dedicated API Gateway only | API, Integration | Security, Integration | API-GW-001 | Planned |
+| ARCH-04 | Storage limited to authorized cloud ecosystem and designated bucket path | Integration | Functional, Compliance / Controls | INT-STO-004 | Planned |
+
+## 4.3 Test Management and Defect Management
+Test execution will be governed in Jira using a standardized workflow aligned to engineering delivery and release reporting. All test stories, test cases, defects, automation tasks, environment issues, and release blockers will be traceable to Issue AD-488. The core defect workflow is Open -> Triaged -> In Progress -> Ready for QA -> Verified. New issues enter Open when raised by QA, automation, engineering, security, or release management. During Triaged, a daily defect council composed of QA lead, engineering lead, product owner, and where needed security engineering confirms reproducibility, severity, component ownership, rollback exposure, and release impact. Once accepted, the assignee moves the issue to In Progress and links the corrective pull request. After code completion and peer review, the defect transitions to Ready for QA only when the build is deployed in the target test environment, automated checks have passed, and release notes identify the change set. Verified is reserved for QA confirmation using direct retest plus regression impact review; closure cannot occur without evidence attachments.
+
+Severity-based service-level objectives are mandatory. Severity 1 defects include authentication bypass, gateway policy bypass, malware scan skip, unauthorized storage target, or CDN invalidation failure causing stale public identity exposure; these require triage within 30 minutes, engineering response within 1 hour, workaround or fix plan within 4 hours, and validation candidate delivery within 24 hours. Severity 2 defects include incorrect 401 messaging, false accepts or rejects near the file-size boundary, scanner timeout behavior causing visible failure, or UI sync issues that affect some but not all profile surfaces; these require triage within 4 business hours and validated fix delivery within 2 business days. Severity 3 defects include non-blocking usability issues, low-frequency flakiness, or observability gaps; these require triage within 1 business day and target fix delivery within the sprint. Severity 4 defects are cosmetic or documentation-only and are managed through backlog prioritization. Any defect that threatens the 2.0-second SLA or causes residual security ambiguity is automatically elevated one level pending review.
+
+Test management will combine manual exploratory sessions, scripted verification, automation dashboards, and traceability reporting. Every test artifact must be linked to a requirement or architecture control. Manual tests will be stored in Jira/Xray-style structures or equivalent linked test repository with explicit preconditions, datasets, and evidence attachments. Automation results from Playwright, PyTest, JMeter, OWASP ZAP, and integration contracts will publish into the CI pipeline summary and be linked back to Jira through issue keys in commit messages and workflow integrations. Failed automated runs generate either direct defect tickets or investigation tasks depending on confidence and reproducibility.
+
+Peer review and pull-request gating for test scripts are non-optional. Any new or changed automation under ui/, api/, performance/, security/, or integration/ requires one QA peer approval and, for shared framework changes, one additional approval from the test automation maintainer. Pull requests must pass linting, unit checks, secret scanning, and dry-run execution before merge. High-risk suites affecting auth, gateway routing, malware decisions, or CDN synchronization require successful execution in CI on the pull request branch plus green results on the mainline branch before release consumption. No test script may be merged if selectors are unstable, assertions lack requirement mapping, or test data creation is undocumented. This ensures that test assets themselves meet release-quality standards rather than becoming a source of false confidence.
+
+## 4.4 Automation Strategy
+Automation will be built as a layered quality architecture rather than a single end-to-end-only harness. Playwright will own browser-based verification of access gating, DOM refresh behavior, multi-session synchronization, upload control visibility, standardized error messaging, and no-full-reload assertions. Playwright network interception will also be used to validate that the browser transmits the raw binary payload to the approved gateway host and does not invoke local transformation endpoints or client-side canvas export paths. For UI tests, authenticated state management will rely on controlled cookie injection fixtures so valid, expired, near-expiry, and missing session scenarios can be replayed deterministically across Chromium-based and at least one secondary browser engine.
+
+PyTest will own API, service-contract, and backend-sequence assertions. The framework will validate gateway authentication outcomes, payload size boundaries, MIME and magic-number enforcement, malware-positive and malware-negative handling, storage path assertions, and event-chain ordering. Contract tests will use correlation IDs to verify that a single upload request maps to a single scanner evaluation, a single persistence decision, and a corresponding purge signal only when allowed. PyTest fixtures will generate test data and manage deterministic environment cleanup in bucket folders so reruns do not inherit stale state.
+
+JMeter will measure latency and throughput across the gateway and end-to-end upload path, especially near the maximum file-size boundary. It will be configured with staged assertions for percentile latency, error rates, and scanner response timing while tcconfig applies 4G network shaping to browser runners and API clients. OWASP ZAP will execute passive and targeted active checks around authorization, request tampering, header trust, and direct-path bypass attempts. tcconfig will be embedded into environment setup jobs to provide reproducible network constraints for SLA validation and to prevent subjective local-network timing results from polluting performance evidence.
+
+Automation repository structure will follow a convention that supports modular ownership and CI isolation: tests/ui/playwright/avatar/, tests/api/pytest/avatar/, tests/integration/avatar/, tests/security/zap/, tests/performance/jmeter/, data/avatar/, fixtures/auth/, fixtures/files/, and .github/workflows/. Shared helper code will live under libs/testutils/ for correlation ID handling, log polling, bucket cleanup, and artifact naming. Each automated script must embed requirement references such as AD-488 and acceptance IDs in metadata tags so reporting can aggregate coverage at release level.
+
+## 4.5 Test Data Management
+### Data Requirements
+<Identify the type, volume, and data source of test data required, along with masking, scrubbing, and seeding strategies.>
+
+The test data set will include valid JPEG files under 5MB, exact-threshold JPEG and WebP files at 5.00MB, over-limit files at 5.01MB and above, malformed header binaries, renamed text and script files with image extensions, safe malware-flagged samples, and large-dimension but scope-compliant images. Session data will include valid tokens, expired tokens, near-expiry tokens, missing-cookie states, tampered-cookie values, and replay attempts. Data seeding must create isolated user accounts with deterministic avatar reset capability and predefined profile surfaces for synchronization checks. Any production-like personal data is prohibited; synthetic accounts and scrubbed media only are allowed.
+
+## 4.7 Defect Lifecycle, Reporting, and Quality Gates
+The defect lifecycle for this initiative remains Open -> Triaged -> In Progress -> Ready for QA -> Verified, with dashboards segmented by severity, root cause category, and release-blocking status. Daily status reporting will include total executed tests, pass/fail counts, blocked cases, mean time to triage, unresolved high-severity defects, and SLA risk trend. A release cannot proceed if any Severity 1 defect is open, any Severity 2 defect affecting acceptance criteria remains unwaived, or traceability coverage for mandatory requirements drops below 100 percent. Waivers require written approval from QA Director, Engineering Lead, Security Lead for security-related findings, and Product Owner.
+
+Quality gates for scripts and code changes are integrated into GitHub pull requests. Branch protections require passing statuses from ui-playwright.yml, api-pytest.yml, integration-avatar.yml, security-zap.yml, and performance-smoke.yml where applicable. Test scripts must follow a branch strategy in which feature branches raise pull requests into INDEXING or the designated integration branch. Required checks include style validation, dependency audit, unit tests for custom helpers, smoke execution of impacted suites, and artifact publication. Peer review must confirm assertion quality, locator resilience, data isolation, and requirement-tag completeness. Any modification to auth fixtures, gateway route configuration mocks, or storage event polling requires secondary approver review because those assets can silently weaken risk coverage.
+
+## 4.9 Tools and CI/CD Integration
+The CI/CD integration model is designed so that each test layer provides fast failure signals nearest to the code change while preserving deeper environment-backed assurance before release promotion. GitHub Actions will orchestrate the pipeline. On pull_request events affecting tests/ui/**, src/ui/**, or auth-related configuration, the ui-playwright workflow will run browser-based gating and synchronization tests. On changes affecting API handlers, gateway contracts, validators, or tests/api/**, the api-pytest workflow will execute authentication, boundary, and file-signature suites. On push to INDEXING and on workflow_dispatch for release candidates, the integration-avatar workflow will run the full chain against the integrated environment with log correlation enabled. Performance smoke checks will run nightly and on demand in Pre-Prod; full SLA certification runs will be manually triggered after environment readiness is confirmed.
+
+Playwright’s role in the pipeline is to assert real-browser truths that cannot be safely approximated through API tests alone. These include whether the upload component is visually hidden when it should be, whether the unauthorized block message is rendered consistently, whether dynamic avatar updates occur without page reload, and whether multiple active sessions converge on the same updated avatar after cache purge. Playwright jobs will upload traces, videos, screenshots, console logs, and HAR captures as artifacts so failures can be triaged with exact client-side evidence. The framework will also monitor window.performance navigation entries to ensure no full reload occurs during avatar refresh and inspect outbound requests to verify gateway host usage.
+
+PyTest’s role is to supply precision and breadth at the API and service-contract layers. It will validate HTTP status codes, response bodies, event timing, route exclusivity, storage destination constraints, and malware/validation sequencing at a lower cost than full browser tests. Its parameterization model is ideal for matrixing token states, file sizes, file signatures, and scan outcomes. PyTest jobs will emit JUnit XML, structured logs, and custom JSON traces that can be attached to Jira issues and merged into release dashboards.
+
+JMeter provides statistically meaningful timing analysis and trend comparison across builds. It will be integrated through GitHub Actions runners connected to Pre-Prod or controlled performance environments, executing upload scenarios with files near the 5MB threshold under tcconfig-imposed 4G constraints. SLA reports will capture p50, p95, p99, max latency, error percentage, and component timing annotations from server logs. OWASP ZAP will run in a bounded mode suitable for authenticated upload flows, targeting authorization validation, request tampering, gateway bypass attempts, and header manipulation. tcconfig acts as the reproducibility anchor for network conditions by applying deterministic bandwidth, delay, and packet shaping rules on runners used for browser and API execution.
+
+Representative GitHub Actions triggers and folder conventions are as follows: .github/workflows/ui-playwright.yml triggered on pull_request and push for tests/ui/** and src/frontend/**; .github/workflows/api-pytest.yml triggered on pull_request and push for tests/api/**, src/api/**, and gateway config files; .github/workflows/integration-avatar.yml triggered on push to INDEXING, workflow_dispatch, and scheduled nightly runs; .github/workflows/security-zap.yml triggered weekly, on-demand, and on changes to auth or gateway configuration; .github/workflows/performance-smoke.yml triggered nightly and before release candidate signoff. These workflows publish artifacts to a unified run summary and set mandatory commit statuses used by branch protection.
+
+# 7. Assumptions
+<List testing-specific assumptions, including resource availability, team skills, tool access, and upstream data readiness.>
+
+- QA has access to environments with controllable authentication cookies, gateway observability, scanner logs, storage event logs, and CDN purge telemetry.
+- Security-approved malware sample surrogates are available for deterministic safe testing.
+- Engineering exposes correlation IDs or equivalent request identifiers through logs and events.
+- CDN invalidation events are observable within test environments.
+- Human-in-the-Loop approvals are available to resume execution after mandated pause checkpoints.
+
+# 9. Risk Mitigation
+
+| Risk ID | Risk Description | Probability | Impact | Mitigation Actions |
+|---|---|---|---|---|
+| R1 | API Gateway policy bypass allows direct backend upload or alternate host routing | Medium | High | 1) Enforce network ACLs so backend services reject non-gateway origins. 2) Add integration tests that attempt direct service access and confirm denial. 3) Monitor host headers and route telemetry for non-approved ingress paths. 4) Block release if any bypass path succeeds in QA or Pre-Prod. |
+| R2 | Malware scanner timeout causes ambiguous acceptance or delayed persistence | Medium | High | 1) Configure fail-closed timeout policy. 2) Instrument scanner start/finish timestamps. 3) Add negative tests for timeout simulation. 4) Implement alerting for timeout rate threshold breaches. |
+| R3 | CDN edge cache desynchronization leaves stale avatars visible after successful upload | Medium | High | 1) Validate purge event emission and object-key targeting. 2) Test multi-session and multi-edge freshness checks. 3) Introduce cache-busting telemetry comparison. 4) Prevent release if stale reads exceed tolerance. |
+| R4 | Auth token drift or clock skew causes incorrect acceptance/rejection near expiry | Medium | Medium | 1) Define token freshness tolerance explicitly. 2) Execute near-expiry tests with skewed clocks. 3) Centralize time source in environments. 4) Log token-expiry evaluation reason codes. |
+| R5 | Browser performs hidden client-side compression or canvas-based mutation | Low | High | 1) Inspect outbound payload hashes and sizes. 2) Disable and detect canvas/export paths in UI code review and tests. 3) Capture HAR evidence in Playwright. 4) Block merge on unapproved front-end processing libraries. |
+| R6 | Over-limit uploads are rejected downstream instead of instantly at gateway, wasting resources | Medium | Medium | 1) Measure rejection point with correlation IDs. 2) Add explicit gateway-level assertions for 5.01MB files. 3) Alert on scanner/storage invocation after oversize failures. 4) Review gateway config in every release. |
+| R7 | Magic-number validation is incomplete, allowing spoofed files with renamed extensions | Medium | High | 1) Maintain malicious and malformed file corpus. 2) Add contract tests for signature parsing edge cases. 3) Require security review on validator changes. 4) Correlate rejects with validator decision logs. |
+| R8 | Storage misconfiguration writes avatars outside authorized cloud ecosystem or bucket path | Low | High | 1) Validate bucket ARN/path in integration tests. 2) Restrict IAM/service account permissions. 3) Monitor write events for region/provider drift. 4) Add deployment guardrails for storage configuration changes. |
+| R9 | UI sync logic updates some views but not header bars or active sessions | Medium | Medium | 1) Maintain multi-session Playwright suite. 2) Verify DOM update events across profile and header components. 3) Capture stale element screenshots and logs. 4) Prevent signoff until all surface mappings pass. |
+| R10 | Performance budget breach under 4G conditions breaks 2.0-second SLA | Medium | High | 1) Segment latency budgets per component. 2) Run nightly performance smoke and release certification. 3) Use tcconfig for deterministic 4G shaping. 4) Escalate any p95 breach as release blocker until root cause is fixed or formally waived. |
+
+## Resource Estimate
+- QA Lead: 1
+- Senior SDET / Automation Engineers: 2
+- Performance Engineer: 0.5
+- Security Test Engineer: 0.5
+- Manual QA Analyst for exploratory and UAT support: 1
+- Release Manager: 0.25
+- Estimated implementation duration for baseline strategy execution and automation hardening: 3 sprints
+
+# 11. Candidate Additional Sections
+## 11.1 Definitions, Acronyms, and Abbreviations
+<Provide an alphabetical listing of all acronyms, technical abbreviations, and domain-specific terms.>
+
+- CDN: Content Delivery Network
+- E2E: End-to-End
+- HAR: HTTP Archive
+- SLA: Service Level Agreement
+- UAT: User Acceptance Testing
+
+# 12. Approvals
+
+| Version Number | Revision Date (mm/dd/yyyy) | Department | Name and Role | Approval Method / Signature |
+|---|---|---|---|---|
+| 1.0 | 09/21/2026 | QA / Engineering / Security / Product | <Name and Role> | <Approval Method / Signature> |
+
+# 13. Appendix
+<Provide supplementary, non-functional reference data such as throttled network configuration details or specific test script components.>
+
+## Appendix A: Folder Structure
+- tests/ui/playwright/avatar/
+- tests/api/pytest/avatar/
+- tests/integration/avatar/
+- tests/security/zap/
+- tests/performance/jmeter/
+- data/avatar/
+- fixtures/auth/
+- fixtures/files/
+- libs/testutils/
+- .github/workflows/
+
+## Appendix B: Human-in-the-Loop Gate 3 Control
+Pipeline execution state shall transition to Paused before production-adjacent release signoff. Resume is permitted only after manual validation evidence confirms: gateway-only routing, scanner-before-storage sequence, authorized bucket destination, successful CDN invalidation, and 2.0-second SLA compliance.
